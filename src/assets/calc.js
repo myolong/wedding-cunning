@@ -545,3 +545,74 @@
   document.getElementById('wd-print').addEventListener('click', function () { window.print(); });
   render();
 })();
+
+/* 7. 축의금 얼마 낼까 계산기 (하객용) */
+(function () {
+  var box = document.getElementById('chuk'); if (!box) return;
+  // 관계별 [혼자 참석, 불참] 추천 금액(만원), fam = 가족·친척
+  var REL = {
+    sib: { a: 50, n: 50, fam: 1, name: '형제자매' },
+    cousin: { a: 20, n: 10, fam: 1, name: '사촌·가까운 친척' },
+    kin: { a: 10, n: 5, fam: 1, name: '먼 친척' },
+    best: { a: 20, n: 10, name: '아주 친한 친구' },
+    friend: { a: 10, n: 10, name: '친한 친구·동창' },
+    loose: { a: 10, n: 5, name: '가끔 연락하는 친구' },
+    cowork1: { a: 10, n: 5, name: '사적으로 친한 직장 동료' },
+    cowork2: { a: 10, n: 5, name: '일로 아는 동료' },
+    client: { a: 10, n: 5, name: '거래처' },
+    acq: { a: 10, n: 5, name: '얼굴만 아는 지인' }
+  };
+  var UNITS = [3, 5, 10, 15, 20, 30, 50, 70, 100, 150, 200, 300];
+  function up(x) { for (var i = 0; i < UNITS.length; i++) if (UNITS[i] >= x - 1e-9) return UNITS[i]; return Math.ceil(x / 50) * 50; }
+  function prev(x) { for (var i = UNITS.length - 1; i >= 0; i--) if (UNITS[i] < x) return UNITS[i]; return x; }
+  function next(x) { for (var i = 0; i < UNITS.length; i++) if (UNITS[i] > x) return UNITS[i]; return x + 50; }
+  function won(x) { return x + '만원'; }
+  var $ = function (id) { return document.getElementById(id); };
+  var relEl = $('ck-rel'), attEl = $('ck-att'), nEl = $('ck-n'), mealEl = $('ck-meal'), gotEl = $('ck-got'), tightEl = $('ck-tight'), out = $('ck-out');
+
+  function render() {
+    var r = REL[relEl.value], att = attEl.value, eat = att === 'eat';
+    var n = eat ? +nEl.value : 0, meal = +mealEl.value;
+    var got = Math.max(0, parseFloat(gotEl.value) || 0);
+    $('ck-n-wrap').hidden = !eat; $('ck-meal-wrap').hidden = !eat;
+    var why = [];
+    var rec = att === 'no' || att === 'noeat' ? r.n : r.a;
+    if (att === 'eat') why.push(r.name + '이고 혼자 참석하면 보통 <b>' + won(r.a) + '</b>입니다.');
+    else why.push(r.name + '이고 식사를 하지 않으면 보통 <b>' + won(r.n) + '</b>입니다.' + (r.fam ? ' 가족·친척은 참석 여부와 상관없이 비슷하게 내는 경우가 많습니다.' : ''));
+    var floor = 0;
+    if (eat) {
+      floor = up(n * meal);
+      if (n > 1) {
+        rec = rec + (n - 1) * meal;
+        why.push('함께 식사하는 ' + (n - 1) + '명의 식대(1인 약 ' + won(meal) + ')를 더했습니다.');
+      }
+      if (rec < n * meal) why.push((n > 1 ? n + '명' : '1인') + ' 식대가 약 ' + won(n * meal) + '이라 그보다 적지 않게 맞췄습니다.');
+      rec = Math.max(rec, n * meal);
+    }
+    rec = up(rec);
+    if (got > 0) {
+      var g = up(got);
+      if (g > rec) { rec = g; why.push('예전에 ' + won(got) + '을 받았으니 그보다 적지 않게 맞췄습니다.'); }
+      else why.push('예전에 받은 ' + won(got) + '보다 적지 않은 금액입니다.');
+    }
+    if (tightEl.checked && !r.fam) {
+      var t = Math.max(prev(rec), floor, got > 0 ? up(got) : 0, 3);
+      if (t < rec) { rec = t; why.push('형편을 생각해 한 단계 낮췄습니다.'); }
+      if (eat && rec >= 10) why.push('그래도 부담되면 참석 대신 축하 인사와 함께 5만원을 보내는 것도 흔한 선택입니다.');
+    }
+    var low = Math.max(prev(rec), floor, got > 0 ? up(got) : 0);
+    var high = next(rec);
+    var chips = '';
+    if (low < rec) chips += '<li><small>부담 적게</small><b>' + won(low) + '</b></li>';
+    chips += '<li class="on"><small>추천</small><b>' + won(rec) + '</b></li>';
+    chips += '<li><small>넉넉히</small><b>' + won(high) + '</b></li>';
+    var html = '<p class="big">' + won(rec) + ' <small>추천 축의금</small></p>';
+    html += '<ul class="ck-range">' + chips + '</ul>';
+    html += '<ul class="ck-why">' + why.map(function (w) { return '<li>' + w + '</li>'; }).join('') + '</ul>';
+    if (r.fam) html += '<p class="warn">가족·친척 축의금은 집안마다 기준이 크게 다릅니다. 부모님이나 다른 형제·사촌과 먼저 맞춰 보세요.</p>';
+    out.innerHTML = html;
+  }
+  [relEl, attEl, nEl, mealEl, tightEl].forEach(function (el) { el.addEventListener('change', render); });
+  gotEl.addEventListener('input', render);
+  render();
+})();
