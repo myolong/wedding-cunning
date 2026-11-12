@@ -39,6 +39,14 @@ def url(path):
     """사이트 내부 경로 (GitHub Pages 하위 경로 대응)."""
     return BASE_PATH + path
 
+def asset(path):
+    """자산 주소 뒤에 내용 해시를 붙여 브라우저·CDN 캐시가 옛 파일을 쓰지 않게 한다."""
+    import hashlib
+    f = ROOT / "src" / path.lstrip("/")
+    v = hashlib.md5(f.read_bytes()).hexdigest()[:8] if f.exists() else ""
+    return url(path) + (f"?v={v}" if v else "")
+
+
 
 def esc(text):
     return html.escape(str(text), quote=True)
@@ -247,7 +255,7 @@ def layout(*, title, description, path, body, sections, json_ld=None, page_title
 <link rel="icon" href="{url('/favicon.ico')}" sizes="48x48">
 <link rel="icon" href="{url('/assets/favicon.svg')}" type="image/svg+xml">
 <link rel="apple-touch-icon" href="{url('/assets/apple-touch-icon.png')}">
-<link rel="stylesheet" href="{url('/assets/style.css')}">
+<link rel="stylesheet" href="{asset('/assets/style.css')}">
 <link rel="alternate" type="application/rss+xml" title="{esc(SITE_NAME)}" href="{url('/rss.xml')}">
 {chr(10).join(head_extra)}
 </head>
@@ -391,7 +399,7 @@ def build_home(sections):
 {"".join(f'<li><a href="{url(g["path"])}"><strong>{esc(g["title"])}</strong></a></li>' for g in all_guides)}
   </ul>
 </section>
-<script src="{url('/assets/home.js')}" defer></script>
+<script src="{asset('/assets/home.js')}" defer></script>
 """
     json_ld = {"@context": "https://schema.org", "@type": "WebSite", "name": SITE_NAME, "url": SITE_URL + "/", "inLanguage": "ko"}
     write("/", layout(
@@ -441,7 +449,7 @@ def build_section(section, sections):
   <p class="disclaimer">{esc(section['disclaimer'])}</p>
 </section>
 {guides_html}
-<script src="{url('/assets/app.js')}" defer></script>
+<script src="{asset('/assets/app.js')}" defer></script>
 """
     sdir = SRC / "sections" / section["id"]
     LASTMOD[section["path"]] = page_dates(sdir / "section.json", sdir / "items.json", *[g["file"] for g in section["guides"]])[1]
@@ -491,7 +499,7 @@ def build_section(section, sections):
 
 
 def calc_script(g):
-    return f'<script>window.BASE="{BASE_PATH}"</script><script src="{url("/assets/calc.js")}" defer></script>' if g.get("js") else ""
+    return f'<script>window.BASE="{BASE_PATH}"</script><script src="{asset("/assets/calc.js")}" defer></script>' if g.get("js") else ""
 
 
 def breadcrumbs(trail):
