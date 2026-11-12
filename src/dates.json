@@ -82,17 +82,22 @@
  "src/sections/prep/guides/checklist.html": {
   "published": "2026-11-12",
   "modified": "2026-11-12",
-  "hash": "aa259c766587e092afd6d926bf37c781"
+  "hash": "b65a66b04629b9c9b849888851428436"
  },
  "src/sections/prep/guides/photo-shoot-prep.html": {
   "published": "2026-11-12",
   "modified": "2026-11-12",
-  "hash": "eaff12872b9912df7c14f7aeacd1afbf"
+  "hash": "1a399f13705fd8cd1ba314704b617f99"
  },
  "src/sections/prep/guides/wedding-checklist.html": {
   "published": "2026-11-12",
   "modified": "2026-11-12",
   "hash": "4da3e44fe1a27ccc1eac19a010137fa0"
+ },
+ "src/sections/prep/guides/wedding-date.html": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "31e8d9809ccf73b8778ef88fd1a532fd"
  },
  "src/sections/prep/items.json": {
   "published": "2026-11-12",
@@ -163,6 +168,11 @@
   "published": "2026-11-12",
   "modified": "2026-11-12",
   "hash": "e30a3a52ec9bb1661893e18deb95975f"
+ },
+ "src/sections/script/guides/speech-maker.html": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "f512d2c92a5ad37eb30894ebda6464a2"
  },
  "src/sections/script/guides/thank-you-texts.html": {
   "published": "2026-11-12",
