@@ -242,6 +242,18 @@ main h1{font-family:var(--hand);font-weight:400;font-size:clamp(2.1rem,5.5vw,2.8
 .mres .talk{color:var(--pen);font-weight:700}
 .mres .mid{color:#b7791f;font-weight:700}
 @media print{.match .actions,.match .who,.site-header,.site-footer,.related{display:none}}
+.m-printhead{display:none}
+@media print{
+  body.has-mres .crumbs,body.has-mres .meta,body.has-mres .article > :not(.match),body.has-mres .match > :not(.mres),body.has-mres .m-printbtn{display:none!important}
+  body.has-mres{background:#fff!important}
+  body.has-mres .match{box-shadow:none;border:0;padding:0;margin:0}
+  body.has-mres .m-printhead{display:block;font-size:12px;color:#555;margin:0 0 4px}
+  body.has-mres .mres a{color:inherit;text-decoration:none}
+  body.has-mres .mres td,body.has-mres .mres th{padding:6px 8px;font-size:12.5px}
+  body.has-mres .mres tr{break-inside:avoid}
+  body.has-mres .mres .table-wrap{overflow:visible}
+  @page{size:A4;margin:12mm}
+}
 /* 결혼 준비 체크리스트 도구 */
 .clist{background:var(--card);border:2px solid var(--ink);border-radius:var(--radius);box-shadow:4px 4px 0 var(--ink);padding:18px 20px;margin:18px 0 26px}
 .clist .cl-top{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:flex-end;margin-bottom:12px}

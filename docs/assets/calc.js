@@ -168,12 +168,14 @@
         else { st = ['talk', '이야기 필요']; talk.push(i); }
         return '<tr><td>' + q[0] + '</td><td>' + esc(txt(x)) + '</td><td>' + esc(txt(y)) + '</td><td class="' + st[0] + '">' + st[1] + '</td></tr>';
       }).join('');
-      var html = '<h3>비교 결과</h3><p class="big">' + same.length + ' / ' + Q.length + '<small>이미 같은 생각</small></p>';
+      var d = new Date(), today = d.getFullYear() + '.' + (d.getMonth() + 1) + '.' + d.getDate();
+      var html = '<p class="m-printhead">결혼컨닝 · 양가 의견 맞추기표 · ' + today + '</p><h3>비교 결과</h3><p class="big">' + same.length + ' / ' + Q.length + '<small>이미 같은 생각</small></p>';
       if (talk.length) html += '<p><b>먼저 이야기할 것:</b> ' + talk.map(function (i) { return '<a href="' + (window.BASE || '') + Q[i][3] + '">' + Q[i][0] + '</a>'; }).join(', ') + '</p>';
       if (near.length) html += '<p><b>조금만 맞추면 되는 것:</b> ' + near.map(function (i) { return Q[i][0]; }).join(', ') + '</p>';
       html += '<div class="table-wrap"><table><thead><tr><th>항목</th><th>' + esc(na || '신랑 측') + '</th><th>' + esc(nb || '신부 측') + '</th><th>상태</th></tr></thead><tbody>' + rows + '</tbody></table></div>';
-      html += '<p class="note">"상관없음"을 고른 항목은 맞춰 줄 수 있다는 뜻으로 보고 "맞음"으로 표시했습니다. 이 결과는 어디에도 저장되지 않으니, 필요하면 인쇄하거나 화면을 캡처해 두세요.</p><p><button type="button" class="btn-plain" onclick="window.print()">인쇄하기</button></p>';
+      html += '<p class="note">"상관없음"을 고른 항목은 맞춰 줄 수 있다는 뜻으로 보고 "맞음"으로 표시했습니다. 이 결과는 어디에도 저장되지 않으니, 필요하면 PDF로 저장하거나 화면을 캡처해 두세요.</p><p class="m-printbtn"><button type="button" class="btn-plain" onclick="window.print()">PDF로 저장 · 인쇄</button></p>';
       res.innerHTML = html; res.hidden = false;
+      document.body.classList.add('has-mres');
       res.scrollIntoView({ behavior: 'smooth' });
     }
   })();
