@@ -1,0 +1,222 @@
+{
+ "src/sections/budget/guides/budget-calculator.html": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "90616cea9e5294f8587c1ad42640fa91"
+ },
+ "src/sections/budget/guides/sdm-cost.html": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "9d1fcb87c7320f44f42f6d30f45f7e83"
+ },
+ "src/sections/budget/guides/wedding-cost.html": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "6fca5c809a2811cb4b760e3ae1eb6d83"
+ },
+ "src/sections/budget/items.json": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "6b15306ac1cba6964f27b09c08420758"
+ },
+ "src/sections/budget/section.json": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "aa95cc6da592a4e45c3ce8b47aeb7d5e"
+ },
+ "src/sections/dapre/guides/favor-message.html": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "0051ce99fb4a15a96695a47354ca05ac"
+ },
+ "src/sections/dapre/guides/wedding-favors.html": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "bd73ebd3f3c9c7875970dd9374a86852"
+ },
+ "src/sections/dapre/items.json": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "613e6d8e510ced3f8185e39d3d3441fe"
+ },
+ "src/sections/dapre/section.json": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "f9e0f2b541aad52dca0f9fcc67b01ca1"
+ },
+ "src/sections/honsu/guides/after-wedding.html": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "50c112c289e5403b6ebcdb3e8abf6e0a"
+ },
+ "src/sections/honsu/guides/appliance-list.html": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "43c1a8b1f6deacc6874d063cec180f10"
+ },
+ "src/sections/honsu/guides/honeymoon-prep.html": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "c1df1e63b3b68fb357410a71183b0cd3"
+ },
+ "src/sections/honsu/items.json": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "1dca11fcaca00e9e8e09b45e7af29068"
+ },
+ "src/sections/honsu/section.json": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "2653e8cd0de829ace9a5ed3badbef59a"
+ },
+ "src/sections/prep/guides/checklist.html": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "aa259c766587e092afd6d926bf37c781"
+ },
+ "src/sections/prep/guides/photo-shoot-prep.html": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "eaff12872b9912df7c14f7aeacd1afbf"
+ },
+ "src/sections/prep/items.json": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "b526015fd1dcb70be0ce7c930106af80"
+ },
+ "src/sections/prep/section.json": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "853dd1b17695518189f5bbce21dc29ea"
+ },
+ "src/sections/sanggyeonrye/guides/agree-sheet.html": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "561cbeb093ab68b9c45bc6697a515daf"
+ },
+ "src/sections/sanggyeonrye/guides/gift.html": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "d6705e5045754036f063af13f0ad60fb"
+ },
+ "src/sections/sanggyeonrye/guides/order-talk.html": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "4081ad5d2fadf4e0b8ae0a8142015cea"
+ },
+ "src/sections/sanggyeonrye/guides/outfit.html": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "daa6aa2d574045bfba278b99d3465ec1"
+ },
+ "src/sections/sanggyeonrye/guides/restaurant.html": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "51fb03b61c85bd842ccb5c9da4f29943"
+ },
+ "src/sections/sanggyeonrye/items.json": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "cdba12426a160a96f24326b367533db5"
+ },
+ "src/sections/sanggyeonrye/section.json": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "5148b55aa6e0ba6e8539d7264e46eb08"
+ },
+ "src/sections/script/guides/invitation-texts.html": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "4bb5c8cc52cef530fbf14374659b75d9"
+ },
+ "src/sections/script/guides/money-talk.html": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "2493f4880df1592e5f01af987de4f202"
+ },
+ "src/sections/script/guides/request-texts.html": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "b53e7c0b77f5123ab8c0178b35148667"
+ },
+ "src/sections/script/guides/sanggyeon-greeting.html": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "5a0a758ddaa016ab4841dfa9b1c6ed54"
+ },
+ "src/sections/script/guides/skip-yedan.html": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "e30a3a52ec9bb1661893e18deb95975f"
+ },
+ "src/sections/script/guides/thank-you-texts.html": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "1583199b0c82a5155ba13335645210b6"
+ },
+ "src/sections/script/items.json": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "97355fa7f86aa26bb9c287d8c830c615"
+ },
+ "src/sections/script/section.json": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "f61903d7485a6e6ea7a40fbf8b5cb048"
+ },
+ "src/sections/wedding-day/guides/ceremony-order.html": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "bb58f1846a2a9ef43ce07e127f408e5f"
+ },
+ "src/sections/wedding-day/guides/honju-hanbok.html": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "631e1758c02e05c62215a72d75d50d57"
+ },
+ "src/sections/wedding-day/guides/venue-check.html": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "865580ed22eb501f0640ca36a5277f7a"
+ },
+ "src/sections/wedding-day/items.json": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "3dc504fff79f23ba9f855e1a65cac342"
+ },
+ "src/sections/wedding-day/section.json": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "63230a01520c3b744e15829084047230"
+ },
+ "src/sections/yedan/guides/ibaji.html": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "c171e990ac4a56487aeb184e4627bc94"
+ },
+ "src/sections/yedan/guides/pyebaek.html": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "5976b8e2081e78764fd688e4eaf61f8c"
+ },
+ "src/sections/yedan/guides/yedan.html": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "3a10443505e49c424788453b46b543c1"
+ },
+ "src/sections/yedan/guides/yemul.html": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "39f0082820f7cc7c4695aee4898ca10c"
+ },
+ "src/sections/yedan/items.json": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "5f067852189bf8570f7792df954f5131"
+ },
+ "src/sections/yedan/section.json": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "1c790792490bf0dc494990221172a7e6"
+ }
+}

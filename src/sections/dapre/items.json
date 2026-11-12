@@ -1,0 +1,11 @@
+[
+ {"name": "수건", "cat": "쓰는 것", "price": "낮음~중간", "good": "누구나 쓰고 오래 남음", "tip": "두께(g)와 문구 자수 비용 확인", "guide": "wedding-favors", "aka": ["수건답례품", "답례품수건"]},
+ {"name": "꿀·꿀스틱", "cat": "먹는 것", "price": "낮음~중간", "good": "가볍고 어른들이 좋아함", "tip": "개별 포장·유통기한 확인", "guide": "wedding-favors", "aka": ["꿀답례품", "꿀스틱답례품"]},
+ {"name": "쿠키·마카롱", "cat": "먹는 것", "price": "낮음", "good": "예쁘고 부담 없음", "tip": "제작일과 보관 기간 짧음", "guide": "wedding-favors", "aka": ["쿠키답례품"]},
+ {"name": "호두정과·도라지정과", "cat": "먹는 것", "price": "중간", "good": "고급스럽고 어른들 선호", "tip": "견과류 알레르기 표시", "guide": "wedding-favors", "aka": ["호두정과답례품", "정과"]},
+ {"name": "떡", "cat": "먹는 것", "price": "낮음~중간", "good": "전통적이고 식사 대신 챙기기 좋음", "tip": "당일 제작, 금방 굳음", "guide": "wedding-favors", "aka": ["답례떡"]},
+ {"name": "핸드워시·핸드크림", "cat": "쓰는 것", "price": "낮음~중간", "good": "실용적, 젊은 하객 선호", "tip": "향이 너무 강하지 않게", "guide": "wedding-favors", "aka": ["핸드워시답례품"]},
+ {"name": "커피·차 세트", "cat": "먹는 것", "price": "낮음", "good": "가볍고 보관 쉬움", "tip": "카페인 없는 차도 섞기", "guide": "wedding-favors", "aka": ["드립백"]},
+ {"name": "참기름·들기름", "cat": "먹는 것", "price": "중간", "good": "어른 하객이 반가워함", "tip": "병이 무거워 들고 가기 불편할 수 있음", "guide": "wedding-favors", "aka": ["참기름답례품"]},
+ {"name": "답례품 문구", "cat": "기타", "price": "-", "good": "감사 인사를 짧게 전함", "tip": "이름·날짜 오타 꼭 확인", "guide": "favor-message", "aka": ["답례품문구", "결혼답례품문구", "스티커문구"]}
+]
