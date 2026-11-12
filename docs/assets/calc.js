@@ -469,3 +469,172 @@
   });
   render();
 })();
+
+/* ── 6. 결혼 날짜 고르기 달력 (음력·공휴일 자료는 2026~2028년) ── */
+(function () {
+  var box = document.getElementById('wdate'); if (!box) return;
+  // 음력 달이 시작하는 양력 날짜 [YYYYMMDD, 음력 월, 윤달 1] — korean-lunar-calendar(한국천문연구원 자료 기반)로 만듦
+  var LM = [["20251220",11,0],["20260119",12,0],["20260217",1,0],["20260319",2,0],["20260417",3,0],["20260517",4,0],["20260615",5,0],["20260714",6,0],["20260813",7,0],["20260911",8,0],["20261011",9,0],["20261109",10,0],["20261209",11,0],["20270108",12,0],["20270207",1,0],["20270308",2,0],["20270407",3,0],["20270506",4,0],["20270605",5,0],["20270704",6,0],["20270802",7,0],["20270901",8,0],["20270930",9,0],["20271029",10,0],["20271128",11,0],["20271228",12,0],["20280127",1,0],["20280225",2,0],["20280326",3,0],["20280425",4,0],["20280524",5,0],["20280623",5,1],["20280722",6,0],["20280820",7,0],["20280919",8,0],["20281018",9,0],["20281116",10,0],["20281216",11,0]];
+  // 공휴일 (2026년 11월 기준, 제헌절·노동절 포함, 임시공휴일 제외)
+  var HOL = {"20260101":"신정연휴","20260216":"설날 전날","20260217":"설날","20260218":"설날 다음날","20260301":"삼일절","20260302":"삼일절 대체 휴일","20260501":"노동절","20260505":"어린이날","20260524":"부처님오신날","20260525":"부처님오신날 대체 휴일","20260603":"지방선거일","20260606":"현충일","20260717":"제헌절","20260815":"광복절","20260817":"광복절 대체 휴일","20260924":"추석 전날","20260925":"추석","20260926":"추석 다음날","20261003":"개천절","20261005":"개천절 대체 휴일","20261009":"한글날","20261225":"기독탄신일","20270101":"신정연휴","20270206":"설날 전날","20270207":"설날","20270208":"설날 다음날","20270209":"설날 대체 휴일","20270301":"삼일절","20270501":"노동절","20270503":"노동절 대체 휴일","20270505":"어린이날","20270513":"부처님오신날","20270606":"현충일","20270717":"제헌절","20270719":"제헌절 대체 휴일","20270815":"광복절","20270816":"광복절 대체 휴일","20270914":"추석 전날","20270915":"추석","20270916":"추석 다음날","20271003":"개천절","20271004":"개천절 대체 휴일","20271009":"한글날","20271011":"한글날 대체 휴일","20271225":"기독탄신일","20271227":"기독탄신일 대체 휴일","20280101":"신정연휴","20280126":"설날 전날","20280127":"설날","20280128":"설날 다음날","20280301":"삼일절","20280412":"국회의원 선거일","20280501":"노동절","20280502":"부처님오신날","20280505":"어린이날","20280606":"현충일","20280717":"제헌절","20280815":"광복절","20281002":"추석 전날","20281003":"개천절·추석","20281004":"추석 다음날","20281005":"추석 대체 휴일","20281009":"한글날","20281225":"기독탄신일"};
+  var FIRST = new Date(2026, 0, 1), LAST = new Date(2028, 11, 31);
+  function key(d) { return d.getFullYear() + ('0' + (d.getMonth() + 1)).slice(-2) + ('0' + d.getDate()).slice(-2); }
+  function parse(k) { return new Date(+k.slice(0, 4), +k.slice(4, 6) - 1, +k.slice(6, 8)); }
+  var starts = LM.map(function (x) { return [parse(x[0]).getTime(), x[1], x[2]]; });
+  function lunar(d) {
+    var t = d.getTime(), s = null;
+    for (var i = starts.length - 1; i >= 0; i--) if (starts[i][0] <= t) { s = starts[i]; break; }
+    if (!s) return null;
+    return { m: s[1], leap: s[2], d: Math.round((t - s[0]) / 864e5) + 1 };
+  }
+  function off(d) { var w = d.getDay(); return w === 0 || w === 6 || !!HOL[key(d)]; }
+  // 쉬는 날이 3일 넘게 이어지면 연휴
+  var LONG = {};
+  (function () {
+    var d = new Date(FIRST), run = [];
+    while (d <= LAST) {
+      if (off(d)) run.push(key(d));
+      else { if (run.length >= 3) run.forEach(function (k) { LONG[k] = 1; }); run = []; }
+      d.setDate(d.getDate() + 1);
+    }
+    if (run.length >= 3) run.forEach(function (k) { LONG[k] = 1; });
+  })();
+  function season(m) { return [3, 4, 5, 6, 9, 10, 11].indexOf(m) >= 0 ? '성수기' : '비수기'; }
+  function sonless(l) { return l && (l.d % 10 === 9 || l.d % 10 === 0); }
+  var startEl = document.getElementById('wd-start'), lenEl = document.getElementById('wd-len'), onlyEl = document.getElementById('wd-weekend');
+  var now = new Date(), opts = '', d0 = new Date(Math.max(new Date(now.getFullYear(), now.getMonth(), 1), FIRST));
+  for (var d = new Date(d0); d <= LAST; d.setMonth(d.getMonth() + 1)) {
+    opts += '<option value="' + d.getFullYear() + '-' + d.getMonth() + '">' + d.getFullYear() + '년 ' + (d.getMonth() + 1) + '월</option>';
+  }
+  startEl.innerHTML = opts;
+  var WK = ['일', '월', '화', '수', '목', '금', '토'];
+  function tags(d) {
+    var k = key(d), l = lunar(d), t = [];
+    if (sonless(l)) t.push(['son', '손 없는 날']);
+    if (HOL[k]) t.push(['hol', HOL[k]]);
+    else if (LONG[k]) t.push(['long', '연휴']);
+    return t;
+  }
+  function render() {
+    var p = startEl.value.split('-'), y = +p[0], m = +p[1], n = +lenEl.value, html = '', picks = [];
+    for (var i = 0; i < n; i++) {
+      var first = new Date(y, m + i, 1); if (first > LAST) break;
+      var mm = first.getMonth() + 1, ss = season(mm);
+      html += '<div class="wd-month"><h3>' + first.getFullYear() + '년 ' + mm + '월 <span class="wd-season ' + (ss === '성수기' ? 'hi' : 'lo') + '">' + ss + '</span></h3><div class="wd-grid">';
+      html += WK.map(function (w, wi) { return '<b class="wd-wk' + (wi === 0 ? ' sun' : wi === 6 ? ' sat' : '') + '">' + w + '</b>'; }).join('');
+      for (var b = 0; b < first.getDay(); b++) html += '<span class="wd-cell empty"></span>';
+      for (var dd = new Date(first); dd.getMonth() === first.getMonth(); dd.setDate(dd.getDate() + 1)) {
+        var wd = dd.getDay(), wkend = wd === 0 || wd === 6, l = lunar(dd), t = tags(dd), k = key(dd);
+        var cls = 'wd-cell' + (wd === 0 || HOL[k] ? ' sun' : wd === 6 ? ' sat' : '') + (LONG[k] ? ' long' : '') + (sonless(l) ? ' son' : '') + (onlyEl.checked && !wkend ? ' dim' : '');
+        html += '<span class="' + cls + '" title="' + t.map(function (x) { return x[1]; }).join(', ') + '"><b>' + dd.getDate() + '</b><small>' + (l ? (l.leap ? '윤' : '') + l.m + '.' + l.d : '') + '</small>' +
+          (sonless(l) ? '<i class="dot" aria-label="손 없는 날"></i>' : '') + (HOL[k] ? '<em>' + HOL[k].replace(/ 대체 휴일$/, ' 대체') + '</em>' : '') + '</span>';
+        if (wkend && sonless(l) && !LONG[k] && !HOL[k]) picks.push([new Date(dd), ss]);
+      }
+      html += '</div></div>';
+    }
+    document.getElementById('wd-cal').innerHTML = html;
+    var lo = picks.filter(function (x) { return x[1] === '비수기'; }).length;
+    document.getElementById('wd-picks').innerHTML = picks.length
+      ? '<h3>주말 + 손 없는 날 + 연휴 아님: ' + picks.length + '일' + (lo ? ' <small>(비수기 ' + lo + '일)</small>' : '') + '</h3><ul class="wd-list">' + picks.map(function (x) {
+          var dd = x[0], l = lunar(dd);
+          return '<li><b>' + dd.getFullYear() + '.' + (dd.getMonth() + 1) + '.' + dd.getDate() + ' (' + WK[dd.getDay()] + ')</b> <small>음력 ' + l.m + '.' + l.d + '</small> <span class="wd-season ' + (x[1] === '성수기' ? 'hi' : 'lo') + '">' + x[1] + '</span></li>';
+        }).join('') + '</ul>'
+      : '<p class="note">이 기간에는 세 조건을 모두 갖춘 주말이 없습니다. 기간을 늘려 보세요.</p>';
+  }
+  [startEl, lenEl, onlyEl].forEach(function (el) { el.addEventListener('change', render); });
+  document.getElementById('wd-print').addEventListener('click', function () { window.print(); });
+  render();
+})();
+
+/* ── 7. 축사·사회 대본 만들기 ───────────────────────── */
+(function () {
+  var box = document.getElementById('speech'); if (!box) return;
+  function v(id) { var el = document.getElementById(id); return el ? el.value.trim() : ''; }
+  function has(s) { var c = s.charCodeAt(s.length - 1); return c >= 0xAC00 && c <= 0xD7A3 && (c - 0xAC00) % 28 !== 0; }
+  // 받침에 맞는 조사: j(이름, '이', '가')
+  function j(s, a, b) { return s + (s && has(s) ? a : b); }
+  // 친구 부를 때: 받침 있으면 '이' 붙임 (민수 → 민수, 지은 → 지은이)
+  function call(s) { return s && has(s) ? s + '이' : s; }
+  function given(s) { return s.length >= 3 ? s.slice(1) : s; }
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  var mode = 'toast';
+  Array.prototype.forEach.call(box.querySelectorAll('[data-mode]'), function (b) {
+    b.addEventListener('click', function () {
+      mode = b.getAttribute('data-mode');
+      Array.prototype.forEach.call(box.querySelectorAll('[data-mode]'), function (x) { x.classList.toggle('is-on', x === b); });
+      Array.prototype.forEach.call(box.querySelectorAll('[data-only]'), function (x) { x.hidden = x.getAttribute('data-only') !== mode; });
+      run();
+    });
+  });
+  function toast() {
+    var g = v('sp-groom') || '신랑', br = v('sp-bride') || '신부', me = v('sp-me') || '○○○';
+    var side = v('sp-side'), friend = side === 'b' ? br : g, other = side === 'b' ? g : br;
+    var o = other + ' 씨', f = call(given(friend)), rel = v('sp-rel') || '오랜 친구', yrs = v('sp-years'), ep = v('sp-ep'), imp = v('sp-imp'), tone = v('sp-tone');
+    var P = [];
+    P.push('안녕하세요. 저는 ' + (side === 'b' ? '신부' : '신랑') + ' ' + friend + '의 ' + rel + ', ' + me + '입니다.');
+    if (tone === 'short') {
+      P.push((yrs ? yrs + '년 동안 ' : '') + '곁에서 지켜본 ' + f + '는 누구보다 따뜻한 사람입니다. 그런 ' + f + '가 평생을 함께할 ' + o + '를 만나 오늘 이 자리에 섰습니다.');
+      P.push(g + ', ' + br + ' 두 사람, 지금처럼 서로를 아끼며 행복하게 살기를 진심으로 응원합니다. 결혼 축하해!');
+      return P;
+    }
+    P.push('먼저 바쁘신 중에도 두 사람의 앞날을 축복하러 와 주신 양가 부모님과 하객 여러분께 감사드립니다. 그리고 이렇게 소중한 자리에서 축사를 할 수 있게 해 준 ' + g + ', ' + br + ' 두 사람에게도 고맙다는 말을 전합니다.');
+    var p2 = (yrs ? '제가 ' + f + '를 알고 지낸 지 벌써 ' + yrs + '년이 되었습니다. ' : '') ;
+    if (tone === 'fun') p2 += f + '는 겉으로는 무심한 척하지만, 친구가 힘들 때면 제일 먼저 연락하는 사람입니다. 물론 답장은 가끔 하루 뒤에 오지만요.';
+    else p2 += f + '는 말보다 행동으로 마음을 보여 주는 사람입니다. 제가 힘들 때마다 아무 말 없이 곁을 지켜 준 친구였습니다.';
+    P.push(p2);
+    if (ep) {
+      var e = ep.replace(/[.!?]+$/, '');
+      P.push('아직도 잊지 못하는 기억이 있습니다. ' + (/[다요]$/.test(e) ? e + '.' : '바로 ' + e + '입니다.') + ' 그때 저는 ' + f + '가 정말 좋은 사람이라는 걸 다시 한번 느꼈습니다.');
+    }
+    var p4 = imp ? '그런 ' + f + '가 ' + o + '를 처음 소개해 준 날을 기억합니다. ' + imp + (/[.!?]$/.test(imp) ? '' : '.') + ' ' : '그런 ' + f + '가 ' + o + '를 만나고 나서 눈에 띄게 밝아졌습니다. ';
+    p4 += tone === 'fun' ? '연애 이야기만 나오면 휴대폰부터 꺼내 사진을 보여 주던 모습이 아직도 생생합니다. 이제는 그 사진을 보는 대신 두 사람의 행복한 모습을 직접 보게 되어 기쁩니다.' : '두 사람이 함께 있는 모습을 보면, 서로에게 꼭 맞는 사람을 만났다는 게 느껴집니다.';
+    P.push(p4);
+    P.push(tone === 'fun'
+      ? g + ', ' + br + '! 앞으로 살다 보면 다툴 일도 있겠지만, 그럴 때는 오늘 이 자리에서 서로를 바라보던 눈빛을 떠올려 주세요. 그리고 싸우더라도 저한테 전화하는 건 자정 전까지만 부탁합니다.'
+      : g + ', ' + br + ' 두 사람, 살다 보면 좋은 날도 힘든 날도 있겠지만 오늘의 마음을 잊지 말고 서로에게 가장 든든한 편이 되어 주세요.');
+    P.push('두 사람의 새로운 시작을 진심으로 축하합니다. 여러분, 앞으로 행복하게 살아갈 두 사람에게 큰 박수 부탁드립니다. 감사합니다.');
+    return P;
+  }
+  function emcee() {
+    var g = v('sp-groom') || '○○○', br = v('sp-bride') || '○○○', me = v('sp-me') || '○○○', rel = v('sp-mrel') || '친구';
+    var style = v('sp-style'), singer = v('sp-singer'), blesser = v('sp-bless') || '신랑 아버님', candle = document.getElementById('sp-candle').checked;
+    var L = [], n = 0;
+    function step(t, s) { n++; L.push('【' + n + '. ' + t + '】\n' + s); }
+    L.push('(예식 5분 전) 잠시 후 신랑 ' + g + ' 군과 신부 ' + br + ' 양의 결혼식을 시작하겠습니다. 하객 여러분께서는 자리에 앉아 주시고, 휴대폰은 진동으로 바꿔 주시기 바랍니다.');
+    step('개식 선언', '안녕하십니까. 오늘 사회를 맡은 ' + (v('sp-side') === 'b' ? '신부' : '신랑') + '의 ' + rel + ' ' + me + '입니다. 바쁘신 중에도 두 사람의 앞날을 축복하기 위해 와 주신 하객 여러분께 신랑·신부를 대신해 감사 인사를 드립니다. 지금부터 신랑 ' + g + ' 군과 신부 ' + br + ' 양의 결혼식을 시작하겠습니다.');
+    if (candle) step('화촉 점화', '먼저 두 사람의 앞날을 밝히는 화촉 점화가 있겠습니다. 양가 어머님께서는 앞으로 나와 주시기 바랍니다. 하객 여러분, 큰 박수로 맞아 주십시오.');
+    step('신랑 입장', '다음은 신랑 입장입니다. 오늘의 주인공, 신랑 ' + g + ' 군 입장!');
+    step('신부 입장', '이어서 신부 입장이 있겠습니다. 오늘 가장 아름다운 신부, ' + br + ' 양이 아버님과 함께 입장합니다. 큰 박수 부탁드립니다.');
+    step('맞절', '신랑·신부는 서로 마주 보고 맞절을 하겠습니다. 신랑·신부 맞절!');
+    if (style === 'jurye') {
+      step('혼인 서약', '다음은 혼인 서약입니다. 주례 선생님께서 진행해 주시겠습니다.');
+      step('성혼 선언', '주례 선생님께서 두 사람이 부부가 되었음을 선언해 주시겠습니다.');
+      step('주례사', '두 사람의 앞날을 위해 주례 선생님께서 좋은 말씀을 해 주시겠습니다.');
+    } else {
+      step('혼인 서약', '다음은 두 사람이 직접 준비한 혼인 서약입니다. 신랑·신부는 하객 여러분을 향해 서 주시기 바랍니다.');
+      step('성혼선언문 낭독', (style === 'mc' ? '두 사람이 부부가 되었음을 제가 대신 선언하겠습니다. (성혼선언문 낭독)' : '이어서 신부 아버님께서 성혼선언문을 낭독해 주시겠습니다.') + ' 이로써 두 사람이 부부가 되었음을 하객 여러분 앞에 엄숙히 선언합니다. 큰 박수로 축하해 주십시오.');
+      step('덕담', blesser + '께서 두 사람에게 덕담을 해 주시겠습니다.');
+    }
+    if (singer) step('축가', '두 사람을 위해 ' + j(singer, '이', '가') + ' 축가를 준비했습니다. 큰 박수로 맞아 주십시오.\n(축가 후) 아름다운 노래 감사합니다. 다시 한번 큰 박수 부탁드립니다.');
+    step('양가 부모님께 인사', '신랑·신부는 키워 주신 은혜에 감사하는 마음을 담아 양가 부모님께 인사드리겠습니다. 먼저 신부 측 부모님께, 이어서 신랑 측 부모님께 인사드립니다.');
+    step('하객 인사', '이번에는 오늘 와 주신 하객 여러분께 감사 인사를 드리겠습니다. 신랑·신부, 하객 여러분께 인사!');
+    step('행진', '이제 두 사람이 부부로서 첫걸음을 내딛는 행진이 있겠습니다. 하객 여러분, 가장 큰 박수와 환호로 축하해 주십시오. 신랑·신부 행진!');
+    step('폐식과 사진 안내', '이상으로 신랑 ' + g + ' 군과 신부 ' + br + ' 양의 결혼식을 모두 마치겠습니다. 잠시 후 사진 촬영이 있겠습니다. 양가 가족분들, 친척분들, 그리고 친구분들 순서로 촬영하겠으니 자리에서 잠시 기다려 주십시오. 식사는 ○층 연회장에서 하시면 됩니다. 감사합니다.');
+    return L;
+  }
+  function run() {
+    var out = document.getElementById('sp-out'), text;
+    if (mode === 'toast') text = toast().join('\n\n'); else text = emcee().join('\n\n');
+    var chars = text.replace(/\s/g, '').length, min = Math.max(1, Math.round(chars / 300 * 2) / 2);
+    out.innerHTML = '<p class="note">약 ' + chars.toLocaleString('ko-KR') + '자 · 소리 내어 읽으면 ' + min + '분 안팎</p><div class="script sp-text">' + esc(text).split('\n\n').map(function (p) { return '<p>' + p.replace(/\n/g, '<br>') + '</p>'; }).join('') + '</div>';
+    out.setAttribute('data-text', text);
+  }
+  box.addEventListener('input', run); box.addEventListener('change', run);
+  document.getElementById('sp-copy').addEventListener('click', function () {
+    var t = document.getElementById('sp-out').getAttribute('data-text') || '', b = this;
+    function ok() { b.textContent = '복사했어요'; setTimeout(function () { b.textContent = '대본 복사하기'; }, 1500); }
+    if (navigator.clipboard) navigator.clipboard.writeText(t).then(ok, function () {}); 
+  });
+  document.getElementById('sp-print').addEventListener('click', function () { window.print(); });
+  run();
+})();

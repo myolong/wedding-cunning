@@ -1,0 +1,41 @@
+---
+title: 결혼 날짜 고르기 달력 - 손 없는 날·공휴일·연휴·성수기 한눈에 (2026~2028)
+description: 원하는 기간을 고르면 날짜마다 음력, 손 없는 날, 공휴일·연휴, 예식장 성수기·비수기를 함께 보여 주는 결혼 날짜 달력입니다. 주말이면서 손 없는 날이고 연휴가 아닌 날을 따로 골라 줍니다.
+short: 결혼 날짜 고르기 달력
+calc: yes
+order: 1
+home: yes
+sources: 한국천문연구원 음양력 정보 | https://astro.kasi.re.kr ; 인사혁신처 관공서의 공휴일 | https://www.mpm.go.kr
+---
+<p>결혼 날짜를 정할 때는 <b>부모님이 챙기시는 날</b>(손 없는 날), <b>하객이 오기 쉬운 날</b>(연휴·명절 피하기), <b>우리 예산</b>(성수기·비수기)을 함께 봐야 합니다. 아래 달력은 이 세 가지를 한 화면에 보여 줍니다.</p>
+
+<div class="calc wdate" id="wdate">
+  <div class="fields">
+    <label>시작 달<select id="wd-start"></select></label>
+    <label>볼 기간<select id="wd-len"><option value="3">3개월</option><option value="6" selected>6개월</option><option value="12">12개월</option></select></label>
+  </div>
+  <div class="wd-bar">
+    <label class="wd-check"><input type="checkbox" id="wd-weekend" checked> 주말만 진하게</label>
+    <button type="button" class="btn-plain" id="wd-print">PDF로 저장 · 인쇄</button>
+  </div>
+  <p class="wd-legend"><span><i class="dot"></i> 손 없는 날</span><span><em class="red">빨간 글씨</em> 공휴일</span><span><span class="sw long"></span> 3일 이상 연휴</span><span class="wd-season hi">성수기</span><span class="wd-season lo">비수기</span><span><small>작은 숫자 = 음력</small></span></p>
+  <div id="wd-cal"></div>
+  <div class="result" id="wd-picks"></div>
+</div>
+
+<h2>달력 읽는 법</h2>
+<ul>
+<li><b>손 없는 날</b>: 음력으로 끝자리가 9, 0인 날(9일, 10일, 19일, 20일, 29일, 30일)입니다. 예부터 이사·혼례에 좋은 날로 여겨 부모님 세대가 많이 챙기십니다. 대신 이 날의 주말은 예식장 예약이 빨리 찹니다.</li>
+<li><b>연휴</b>: 주말과 공휴일이 3일 넘게 이어지는 날입니다. 하객이 여행을 가거나 고향에 내려가 참석이 줄어들기 쉬워 피하는 경우가 많습니다. 특히 설·추석 연휴는 거의 피합니다.</li>
+<li><b>성수기·비수기</b>: 보통 봄(3~6월)과 가을(9~11월)이 성수기, 여름(7~8월)과 겨울(12~2월)이 비수기입니다. 비수기에는 식대 할인이나 혜택을 주는 예식장이 많지만, 예식장마다 기준이 달라 견적으로 확인해야 합니다.</li>
+</ul>
+<p>날짜 후보를 2~3개 정한 뒤 예식장에 문의하세요. 예식장 고를 때 볼 점은 <a href="/wedding-day/venue-check/">예식장 체크리스트</a>, 전체 준비 일정은 <a href="/prep/wedding-checklist/">결혼 준비 체크리스트</a>에 정리했습니다.</p>
+<p class="note">음력은 한국천문연구원 자료를 바탕으로 한 계산이고, 공휴일은 2026년 11월 기준입니다(2026년부터 공휴일이 된 제헌절·노동절 포함). 나중에 정해지는 임시공휴일은 들어 있지 않습니다. 2026~2028년만 볼 수 있습니다.</p>
+
+<h2>자주 묻는 질문</h2>
+<h3>손 없는 날은 어떻게 정하나요?</h3>
+<p>음력 날짜의 끝자리가 9나 0인 날입니다. 음력 9일, 10일, 19일, 20일, 29일, 30일이 해당합니다. 양력 날짜로는 달마다 바뀌므로 달력으로 확인해야 합니다.</p>
+<h3>결혼식은 언제가 비수기인가요?</h3>
+<p>보통 여름(7~8월)과 겨울(12~2월)이 비수기입니다. 예식장에 따라 비수기 할인이나 식대 혜택이 있으니 같은 예식장에서 성수기와 비수기 견적을 함께 받아 비교해 보세요.</p>
+<h3>연휴에 결혼하면 안 되나요?</h3>
+<p>안 되는 건 아니지만 하객이 여행·귀성으로 참석하기 어려울 수 있습니다. 반대로 멀리 사는 하객이 많다면 연휴가 오히려 편할 수도 있으니, 하객 구성을 보고 정하세요.</p>

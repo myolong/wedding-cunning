@@ -318,3 +318,50 @@ main h1{font-family:var(--hand);font-weight:400;font-size:clamp(2.1rem,5.5vw,2.8
 .calc .ratio td.amt{text-align:right;white-space:nowrap;min-width:84px}
 .calc .ratio-sum{font-size:14.5px;margin:6px 0 10px}
 .calc #wb-out{margin-top:14px}
+/* 결혼 날짜 고르기 달력 */
+.wdate .wd-bar{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;margin:12px 0 6px}
+.wdate .wd-check{display:inline-flex;align-items:center;gap:6px;font-size:14.5px;color:var(--ink)}
+.wdate .wd-check input{display:inline;width:auto;margin:0}
+.wd-legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:var(--muted);margin:4px 0 10px}
+.wd-legend span{display:inline-flex;align-items:center;gap:4px}
+.wd-legend .red{color:#c0392b;font-style:normal;font-weight:700}
+.wd-legend .sw{width:16px;height:12px;border-radius:3px;display:inline-block}
+.wd-legend .sw.long,.wd-cell.long{background:repeating-linear-gradient(135deg,#eceae4 0 4px,#f7f5ef 4px 8px)}
+.wd-season{font-size:12px;font-weight:400;border-radius:99px;padding:1px 8px;font-family:var(--sans)}
+.wd-season.hi{background:var(--pen);color:#fff}
+.wd-season.lo{background:#dfe9f5;color:#24476b}
+.wd-month{margin:16px 0}
+.wd-month h3{margin:0 0 6px;font-size:17px}
+.wd-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.wd-wk{text-align:center;font-size:12.5px;color:var(--muted);padding:2px 0}
+.wd-wk.sun{color:#c0392b}.wd-wk.sat{color:#2d5f9a}
+.wd-cell{position:relative;min-height:58px;border:1px solid var(--line);border-radius:6px;padding:3px 4px;background:var(--card);display:flex;flex-direction:column;line-height:1.2;overflow:hidden}
+.wd-cell.empty{border:0;background:none}
+.wd-cell b{font-size:15px}
+.wd-cell small{font-size:10.5px;color:var(--muted)}
+.wd-cell em{font-style:normal;font-size:10px;color:#c0392b;word-break:keep-all;line-height:1.15;margin-top:1px}
+.wd-cell.sun b{color:#c0392b}.wd-cell.sat b{color:#2d5f9a}
+.wd-cell.son{border-color:#2f8a4f;box-shadow:inset 0 0 0 1px #2f8a4f}
+.wd-cell .dot,.wd-legend .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#2f8a4f}
+.wd-cell .dot{position:absolute;top:5px;right:5px}
+.wd-cell.dim{opacity:.38}
+.wd-list{columns:2 260px;padding-left:18px}
+.wd-list li{margin:3px 0;break-inside:avoid}
+@media (max-width:560px){.wd-cell{min-height:50px;padding:2px 3px}.wd-cell b{font-size:13.5px}.wd-cell small{font-size:9.5px}.wd-cell em{font-size:9px}}
+@media print{
+  .wdate .fields,.wdate .wd-bar{display:none}
+  .wd-cell{min-height:44px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .wd-season,.wd-legend .sw,.wd-cell .dot,.wd-legend .dot{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .wd-month{break-inside:avoid}
+}
+/* 축사·사회 대본 만들기 */
+.speech .sp-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.btn-plain.ghost{background:var(--card);color:var(--ink)}
+.speech .sp-text p{margin:.55em 0;line-height:1.75}
+@media print{
+  body.has-sp .site-header,body.has-sp .site-footer,body.has-sp .related,body.has-sp .crumbs,body.has-sp .meta,body.has-sp .article > :not(.speech),body.has-sp .speech > :not(#sp-out){display:none!important}
+  body.has-sp{background:#fff!important}
+  body.has-sp .speech{border:0;box-shadow:none;padding:0}
+  body.has-sp .sp-text{border:0;box-shadow:none;font-size:14pt}
+  @page{size:A4;margin:15mm}
+}
