@@ -121,26 +121,40 @@
       if (navigator.clipboard) navigator.clipboard.writeText(link).then(function () { share.querySelector('.note').textContent = '링크를 복사했습니다. 카톡 등으로 상대에게 보내 주세요. 상대가 열면 자기 답을 고른 뒤 둘을 비교해 볼 수 있습니다.'; });
     });
 
+    function count(a) { return a.replace(/-/g, '').length; }
+    function compareLocal() {
+      var cur = mine();
+      if (!count(cur)) { alert(label(side()) + ' 답을 아직 고르지 않았습니다. 13가지를 고른 뒤 다시 눌러 주세요.'); return; }
+      var a = first.s === 'a' ? first.a : cur, b = first.s === 'a' ? cur : first.a;
+      show(a, b, first.s === 'a' ? first.n : $('m-name').value, first.s === 'a' ? $('m-name').value : first.n);
+    }
+
     $('m-compare').addEventListener('click', function () {
+      if (first) { compareLocal(); return; }
       if (!other) { alert('먼저 상대에게서 받은 링크로 이 페이지를 열어 주세요. 같은 기기에서 함께 해 보려면 "한 화면에서 둘 다 고르기"를 쓰세요.'); return; }
+      if (!count(mine())) { alert('우리 쪽 답을 아직 고르지 않았습니다. 13가지를 고른 뒤 다시 눌러 주세요.'); return; }
       show(other.s === 'a' ? other.a : mine(), other.s === 'a' ? mine() : other.a, other.s === 'a' ? other.n : $('m-name').value, other.s === 'a' ? $('m-name').value : other.n);
     });
 
-    // 한 화면에서 둘 다: 첫 답을 저장하고 폼을 비워 두 번째 답을 받는다
+    // 한 화면에서 둘 다: 첫 번째 사람이 다 고른 뒤 누르면 답을 저장하고, 폼을 비워 두 번째 사람 차례로 넘긴다
     var first = null;
     $('m-local').addEventListener('click', function () {
-      if (!first) {
-        first = { s: side(), a: mine(), n: $('m-name').value };
-        form.reset(); $('m-name').value = '';
-        var r = box.querySelector('input[name=side][value=' + (first.s === 'a' ? 'b' : 'a') + ']'); if (r) r.checked = true;
-        this.textContent = '두 번째 답까지 골랐어요 → 비교';
+      if (first) { compareLocal(); return; }
+      var a = mine(), n = count(a);
+      if (!n) {
         $('m-got').hidden = false;
-        $('m-got').textContent = label(first.s) + ' 답을 저장했습니다. 이제 ' + label(first.s === 'a' ? 'b' : 'a') + '이 골라 주세요.';
-        window.scrollTo({ top: box.offsetTop - 10, behavior: 'smooth' });
-      } else {
-        var a = first.s === 'a' ? first.a : mine(), b = first.s === 'a' ? mine() : first.a;
-        show(a, b, first.s === 'a' ? first.n : $('m-name').value, first.s === 'a' ? $('m-name').value : first.n);
+        $('m-got').innerHTML = '<b>' + label(side()) + '</b>이 먼저 아래 13가지를 모두 고른 뒤, 이 버튼을 다시 눌러 주세요. 그러면 답이 저장되고 상대 차례로 넘어갑니다.';
+        this.textContent = label(side()) + ' 다 골랐어요 → 상대 차례';
+        return;
       }
+      if (n < Q.length && !confirm('아직 고르지 않은 질문이 ' + (Q.length - n) + '개 있습니다. 이대로 저장하고 상대 차례로 넘길까요?')) return;
+      first = { s: side(), a: a, n: $('m-name').value };
+      form.reset(); $('m-name').value = '';
+      var r = box.querySelector('input[name=side][value=' + (first.s === 'a' ? 'b' : 'a') + ']'); if (r) r.checked = true;
+      this.textContent = '두 번째 답까지 골랐어요 → 비교';
+      $('m-got').hidden = false;
+      $('m-got').innerHTML = '<b>' + label(first.s) + '</b> 답 ' + n + '개를 저장했습니다. 이제 <b>' + label(first.s === 'a' ? 'b' : 'a') + '</b>이 골라 주세요. 다 고르면 아래 버튼을 누르세요.';
+      window.scrollTo({ top: box.offsetTop - 10, behavior: 'smooth' });
     });
 
     function show(a, b, na, nb) {
