@@ -79,6 +79,11 @@
   "modified": "2026-11-12",
   "hash": "eaff12872b9912df7c14f7aeacd1afbf"
  },
+ "src/sections/prep/guides/wedding-checklist.html": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "4da3e44fe1a27ccc1eac19a010137fa0"
+ },
  "src/sections/prep/items.json": {
   "published": "2026-11-12",
   "modified": "2026-11-12",
@@ -92,7 +97,7 @@
  "src/sections/sanggyeonrye/guides/agree-sheet.html": {
   "published": "2026-11-12",
   "modified": "2026-11-12",
-  "hash": "561cbeb093ab68b9c45bc6697a515daf"
+  "hash": "eb02f8531e5b1de8ce4fc32492661ccc"
  },
  "src/sections/sanggyeonrye/guides/gift.html": {
   "published": "2026-11-12",
