@@ -286,3 +286,28 @@ main h1{font-family:var(--hand);font-weight:400;font-size:clamp(2.1rem,5.5vw,2.8
   .clist tr{break-inside:avoid}
   @page{size:A4;margin:12mm}
 }
+/* 혼수 체크리스트 */
+.clist .cl-top select{display:block;font:inherit;font-size:15px;padding:6px 10px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);margin-top:4px}
+.clist .hl-lv{white-space:nowrap;width:1%}
+.clist .hl-won{width:84px}
+.clist .hl-won input{width:72px;font:inherit;font-size:14px;padding:3px 6px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);text-align:right}
+.clist .lv{font-size:12px;border-radius:99px;padding:1px 8px;border:1px solid var(--line)}
+.clist .lv0{background:var(--pen);color:#fff;border-color:var(--pen)}
+.clist .lv1{background:var(--accent-soft)}
+.clist tr.done .hl-won input{color:var(--muted)}
+.clist .hl-name{width:30%}
+.clist .hl-sub{display:none}
+.clist .lv{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+@media (max-width:560px){
+  #hlist .cl-note{display:none}
+  .clist .hl-name{width:auto}
+  .clist .hl-sub{display:block;font-size:13px;color:var(--muted);margin-top:3px;text-decoration:none}
+  .clist .hl-won{width:60px}.clist .hl-won input{width:54px}
+}
+@media print{
+  .clist .cl-top{display:none}
+  .clist .hl-won{width:56px}
+  .clist .hl-won input{border:0;background:none;padding:0;width:50px;font-size:11.5px}
+  #hlist .cl-note{display:table-cell!important}.clist .hl-sub{display:none!important}
+  .clist .lv{font-size:10.5px;padding:0 5px}
+}

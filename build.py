@@ -199,7 +199,7 @@ def read_sections():
 
 
 def layout(*, title, description, path, body, sections, json_ld=None, page_title=None, noindex=False):
-    body_class = ' class="has-clist"' if 'id="clist"' in body else ""
+    body_class = ' class="has-clist"' if 'class="clist"' in body else ""
     canonical = SITE_URL + path
     full_title = page_title or f"{title} | {SITE_NAME}"
     head_extra = []

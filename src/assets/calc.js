@@ -296,3 +296,119 @@
   });
   render();
 })();
+
+/* ── 5. 혼수 체크리스트 (체크·예산은 이 브라우저에만 저장) ── */
+(function () {
+  var box = document.getElementById('hlist'); if (!box) return;
+  var LV = ['필수', '있으면 좋음', '나중에', '집에 따라'];
+  // [묶음, [[품목, 우선(0~3), 비고, 링크]]]  ※ 순서를 바꾸면 저장된 체크가 어긋나니 새 품목은 묶음 끝에 추가
+  var G = [
+    ['입주 전 준비', [
+      ['신혼집 실측 (방·창문·현관·엘리베이터)', 0, '가로·세로·높이와 콘센트·배수구 위치를 사진과 함께 기록', ''],
+      ['기본 옵션 확인 (에어컨·붙박이장·가스레인지)', 0, '있는 걸 또 사지 않게 집 계약 때 확인', ''],
+      ['입주일·배송일 표 만들기', 0, '큰 가전·가구가 같은 날 몰리지 않게, 커튼은 입주 당일 필요', ''],
+      ['설치비·폐가전 수거 확인', 0, '벽걸이·직렬 설치·이전 설치비가 따로 붙는지 계약 전에 확인', ''],
+      ['보증서·영수증 보관 폴더', 1, '사진으로도 찍어 두면 A/S 때 편함', '']
+    ]],
+    ['가전', [
+      ['냉장고', 0, '자리 폭·높이·깊이와 문 여는 방향, 반입 통로 폭 확인', '/honsu/appliance-list/'],
+      ['세탁기', 0, '세탁실 문 폭, 수도꼭지·배수구 위치 확인', '/honsu/appliance-list/'],
+      ['청소기', 0, '로봇청소기는 문턱 높이와 바닥 짐을 먼저 확인', ''],
+      ['전자레인지', 0, '주방 상판이나 수납장 자리 확인', ''],
+      ['전기밥솥', 0, '2인 가구는 작은 용량으로도 충분', ''],
+      ['에어컨', 3, '배관 구멍·실외기 자리 확인, 설치비 별도인 경우 많음', ''],
+      ['인덕션·가스레인지', 3, '인덕션은 전기 용량(전용 회로) 확인, 기본 설치 여부 먼저', ''],
+      ['건조기', 1, '세탁기 위에 올릴 때는 전용 설치 키트 필요, 배수 방식 확인', ''],
+      ['TV', 1, '벽걸이는 벽 재질과 설치비 확인, 소파와의 거리 고려', ''],
+      ['식기세척기', 1, '설치 공간과 급수 연결 확인, 2인 가구는 작은 용량도 충분', ''],
+      ['정수기', 1, '렌탈이면 약정 기간과 중도 해지 위약금 확인', ''],
+      ['공기청정기', 2, '살아 보고 필요하면 사도 늦지 않음', ''],
+      ['김치냉장고', 2, '김치를 많이 먹지 않으면 냉장고로 충분', ''],
+      ['에어프라이어·커피머신', 2, '주방 상판이 금방 차니 자리부터 확인', '']
+    ]],
+    ['가구', [
+      ['침대·매트리스', 0, '방 크기 실측, 현관·계단 통과 여부, 매트리스는 직접 누워 보기', ''],
+      ['옷장·수납장', 0, '붙박이장 여부 먼저 확인, 천장 높이 실측', ''],
+      ['식탁·의자', 0, '주방 동선과 의자 뒤로 뺄 공간 확인', ''],
+      ['커튼·블라인드', 0, '창 크기 실측, 입주 첫날 밤부터 필요', ''],
+      ['소파', 1, '거실 동선과 반입 크기 확인, 천 소재는 관리법 확인', ''],
+      ['신발장·현관 수납', 3, '기본 신발장 크기 확인 후 부족하면 추가', ''],
+      ['책상·작업 공간', 2, '재택근무를 하면 우선순위를 올리기', ''],
+      ['화장대', 2, '서랍장 위 거울로 대신하는 경우도 많음', ''],
+      ['조명·스탠드', 2, '기본 조명으로 살아 보고 바꿔도 됨', '']
+    ]],
+    ['주방', [
+      ['냄비·프라이팬', 0, '인덕션이면 사용 가능 표시 확인', ''],
+      ['식기·수저', 0, '2~4인 세트로 시작, 손님용은 나중에', ''],
+      ['칼·도마·조리도구', 0, '도마는 고기·채소용 2개가 편함', ''],
+      ['밀폐용기', 0, '같은 브랜드로 맞추면 쌓기 쉬움', ''],
+      ['주방 세제·수세미·행주', 0, '입주 첫날 바로 필요', ''],
+      ['손님용 식기', 2, '집들이 날짜가 정해지면 그때 준비', '']
+    ]],
+    ['침구·욕실·생활', [
+      ['이불·베개', 0, '세탁할 때를 생각해 2세트, 계절에 맞게', ''],
+      ['수건', 0, '1인당 5~6장이면 넉넉함', ''],
+      ['욕실용품 (샤워기·매트·수납)', 0, '샤워기 헤드 규격, 수건걸이 위치 확인', ''],
+      ['청소용품 (밀대·걸레·쓰레기통)', 0, '분리수거함은 놓을 자리부터 정하기', ''],
+      ['빨래 건조대', 3, '건조기가 없으면 필수, 베란다 폭 확인', ''],
+      ['멀티탭·공구', 0, '멀티탭은 개별 스위치·과부하 차단 제품', ''],
+      ['상비약·구급함', 0, '해열제·소화제·밴드 정도로 시작', ''],
+      ['소화기·화재감지기', 1, '주방 근처에 두고 사용법 미리 읽어 두기', ''],
+      ['러그·쿠션 등 꾸미기', 2, '살면서 천천히, 예산이 남을 때', '']
+    ]]
+  ];
+  var KEY = 'wc-honsu-v1', state = {};
+  try { state = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { state = {}; }
+  if (!state.c) state.c = {}; if (!state.w) state.w = {};
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+  var filterEl = document.getElementById('hl-filter');
+  if (state.f) filterEl.value = state.f;
+  function n(v) { var x = parseFloat(String(v || '').replace(/,/g, '')); return isFinite(x) && x > 0 ? x : 0; }
+  function money(v) { return Math.round(v).toLocaleString('ko-KR'); }
+  function shown(lv) { var f = filterEl.value; return f === 'all' || f.indexOf(String(lv)) >= 0; }
+  function summary() {
+    var total = 0, done = 0, sum = 0, left = 0;
+    G.forEach(function (g, gi) { g[1].forEach(function (t, ti) {
+      if (!shown(t[1])) return;
+      var id = gi + '-' + ti, w = n(state.w[id]); total++; sum += w;
+      if (state.c[id]) done++; else left += w;
+    }); });
+    document.getElementById('hl-prog').innerHTML = '<b>' + done + '</b> / ' + total + ' 준비 완료' + (sum ? ' · 예산 합계 <b>' + money(sum) + '만원</b> (안 산 품목 ' + money(left) + '만원)' : '');
+    document.getElementById('hl-bar').style.width = (total ? done / total * 100 : 0) + '%';
+  }
+  function render() {
+    var html = '';
+    G.forEach(function (g, gi) {
+      var rows = '';
+      g[1].forEach(function (t, ti) {
+        if (!shown(t[1])) return;
+        var id = gi + '-' + ti, on = !!state.c[id];
+        var name = t[3] ? '<a href="' + (window.BASE || '') + t[3] + '">' + t[0] + '</a>' : t[0];
+        rows += '<tr class="' + (on ? 'done' : '') + '"><td class="cl-box"><input type="checkbox" data-id="' + id + '"' + (on ? ' checked' : '') + ' aria-label="' + t[0] + '"></td><td class="hl-name">' + name + '<span class="hl-sub">' + t[2] + '</span></td><td class="hl-lv"><span class="lv lv' + t[1] + '">' + LV[t[1]] + '</span></td><td class="hl-won"><input type="text" inputmode="decimal" data-w="' + id + '" value="' + (state.w[id] || '') + '" aria-label="' + t[0] + ' 예산(만원)"></td><td class="cl-note">' + t[2] + '</td></tr>';
+      });
+      if (rows) html += '<tr class="stage"><th colspan="5">' + g[0] + '</th></tr>' + rows;
+    });
+    document.getElementById('hl-body').innerHTML = html;
+    summary();
+  }
+  var body = document.getElementById('hl-body');
+  body.addEventListener('change', function (e) {
+    var id = e.target.getAttribute('data-id'); if (!id) return;
+    if (e.target.checked) state.c[id] = 1; else delete state.c[id];
+    e.target.closest('tr').className = e.target.checked ? 'done' : '';
+    save(); summary();
+  });
+  body.addEventListener('input', function (e) {
+    var id = e.target.getAttribute('data-w'); if (!id) return;
+    var v = e.target.value.replace(/[^0-9.,]/g, ''); if (v !== e.target.value) e.target.value = v;
+    if (v) state.w[id] = v; else delete state.w[id];
+    save(); summary();
+  });
+  filterEl.addEventListener('change', function () { state.f = filterEl.value; save(); render(); });
+  document.getElementById('hl-print').addEventListener('click', function () { window.print(); });
+  document.getElementById('hl-reset').addEventListener('click', function () {
+    if (!confirm('체크와 예산을 모두 지울까요?')) return;
+    state = { c: {}, w: {}, f: state.f }; save(); render();
+  });
+  render();
+})();
