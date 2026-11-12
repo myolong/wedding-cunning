@@ -1,10 +1,10 @@
 [
  {"name": "냉장고", "cat": "가전", "level": "필수", "how": "주방 자리 가로·세로·깊이를 재고 고르기", "tip": "문 여는 방향과 현관·엘리베이터 통과 크기", "guide": "appliance-list", "aka": ["신혼냉장고"]},
- {"name": "세탁기", "cat": "가전", "level": "필수", "how": "세탁실 크기, 건조기와 위아래로 둘지", "tip": "배수구 위치 확인", "guide": "appliance-list", "aka": ["세탁기"]},
- {"name": "건조기", "cat": "가전", "level": "있으면 좋음", "how": "빨래 널 공간이 좁으면 우선순위 올라감", "tip": "세탁기와 같은 용량대로", "guide": "appliance-list", "aka": ["건조기"]},
+ {"name": "세탁기·건조기", "cat": "가전", "level": "필수", "how": "요즘은 함께 사는 경우가 많음. 위아래로 둘지, 일체형 세탁건조기도 비교", "tip": "세탁실 폭·높이와 배수구 위치 확인", "guide": "appliance-list", "aka": ["세탁기", "건조기", "세탁건조기"]},
  {"name": "TV", "cat": "가전", "level": "있으면 좋음", "how": "거실 소파와의 거리로 크기 정하기", "tip": "벽걸이면 설치 방식 확인", "guide": "appliance-list", "aka": ["티비"]},
  {"name": "에어컨", "cat": "가전", "level": "집에 따라", "how": "기본 설치 여부 먼저 확인", "tip": "설치비·배관 추가 비용", "guide": "appliance-list", "aka": ["에어컨"]},
- {"name": "청소기", "cat": "가전", "level": "필수", "how": "무선·로봇 중 생활 방식에 맞게", "tip": "로봇청소기는 문턱 높이 확인", "guide": "appliance-list", "aka": ["로봇청소기"]},
+ {"name": "무선 청소기", "cat": "가전", "level": "필수", "how": "거치대 둘 자리와 콘센트", "tip": "먼지통 비우기 방식 비교", "guide": "appliance-list", "aka": ["청소기"]},
+ {"name": "로봇청소기", "cat": "가전", "level": "있으면 좋음", "how": "문턱 높이와 바닥 짐 먼저 확인", "tip": "물걸레 겸용은 스테이션 자리 확인", "guide": "appliance-list", "aka": ["로봇청소기"]},
  {"name": "침대·매트리스", "cat": "가구·생활", "level": "필수", "how": "방 크기와 동선을 재고 고르기", "tip": "누워 보고 고르기", "guide": "appliance-list", "aka": ["침대"]},
  {"name": "그릇·주방용품", "cat": "가구·생활", "level": "필수", "how": "기본 세트부터, 나중에 늘리기", "tip": "선물로 받을 수 있는 것은 미뤄 두기", "guide": "appliance-list", "aka": ["신혼그릇", "혼수그릇"]},
  {"name": "여권 유효기간", "cat": "신혼여행", "level": "필수", "how": "출국일 기준 남은 기간 확인", "tip": "많은 나라가 6개월 이상 남은 여권을 요구", "guide": "honeymoon-prep", "aka": ["여권"]},
