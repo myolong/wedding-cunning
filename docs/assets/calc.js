@@ -190,3 +190,107 @@
     box.appendChild(b);
   });
 })();
+
+/* ── 4. 결혼 준비 체크리스트 (체크는 이 브라우저에만 저장) ── */
+(function () {
+  var box = document.getElementById('clist'); if (!box) return;
+  // [단계 이름, 시작(결혼 전 개월), 끝(개월), [[할 일, 비고(주의사항), 링크]]]
+  var S = [
+    ['큰 틀 잡기', 12, 10, [
+      ['양가 부모님께 인사, 결혼 허락', '각자 자기 부모님께 먼저 말씀드리기', ''],
+      ['결혼 시기 후보 2~3개 정하기', '양가 행사·명절·연말을 피해서', '/prep/checklist/'],
+      ['예식 지역·하객 규모 대략 정하기', '양가 부모님 손님 수를 먼저 여쭤 보기', ''],
+      ['총예산 정하기', '신혼집 비용은 따로 계산', '/budget/budget-calculator/'],
+      ['웨딩플래너 쓸지 정하기', '비용 방식과 연결 업체 범위 확인', '/budget/wedding-cost/'],
+      ['예단·예물·함 범위 두 사람 생각 맞추기', '상견례 전에 맞춰 두면 자리가 편해짐', '/sanggyeonrye/agree-sheet/']
+    ]],
+    ['상견례와 예식장', 10, 8, [
+      ['상견례 날짜·식당 예약', '독립된 룸, 양가 중간 위치, 주차 확인', '/sanggyeonrye/restaurant/'],
+      ['상견례 선물 준비', '양가가 주고받을지·가격대를 미리 맞추기', '/sanggyeonrye/gift/'],
+      ['상견례', '예단·예물 금액은 그 자리에서 정하지 않기', '/sanggyeonrye/order-talk/'],
+      ['예식장 3~5곳 투어', '같은 기준으로 비교, 하루 2~3곳', '/wedding-day/venue-check/'],
+      ['예식장 계약', '보증인원·식대 포함 항목·위약금을 계약서로 확인', '/wedding-day/venue-check/']
+    ]],
+    ['스드메와 신혼집', 8, 6, [
+      ['스튜디오·드레스·메이크업 계약', '추가금을 견적서에 항목별로 적어 달라고 하기', '/budget/sdm-cost/'],
+      ['본식 스냅·영상 예약', '원본 제공·작가 지정비·납품 기간 확인', '/budget/wedding-cost/'],
+      ['신혼집 지역·예산 정하기', '대출·지원제도는 공식 누리집에서 최신 조건 확인', '']
+    ]],
+    ['신혼여행과 예물', 6, 4, [
+      ['신혼여행 항공·숙소 예약', '여권 남은 기간 확인 (6개월 이상 요구하는 나라 많음)', '/honsu/honeymoon-prep/'],
+      ['예물 고르기', '맞춤은 제작 기간이 있어 미리, 사이즈 수정 조건 확인', '/yedan/yemul/'],
+      ['한복·혼주 한복 정하기', '양가 어머님 한복 색을 미리 맞추기', '/wedding-day/honju-hanbok/'],
+      ['예단·이바지·폐백 확정', '각자 자기 부모님께 전하기', '/yedan/yedan/']
+    ]],
+    ['촬영과 혼수', 4, 3, [
+      ['웨딩촬영', '누드톤 속옷·구두·소품 챙기기', '/prep/photo-shoot-prep/'],
+      ['드레스 가봉', '본식 구두를 신고 길이 맞추기', ''],
+      ['혼수 가전·가구 목록', '집 치수 재고, 배송일은 입주일 이후로', '/honsu/appliance-list/']
+    ]],
+    ['청첩장과 하객', 3, 2, [
+      ['하객 명단 정리', '부모님 손님 수를 여쭤 인쇄 수량 정하기', ''],
+      ['종이·모바일 청첩장 만들기', '이름·날짜·장소 오타 두 사람이 각각 확인', ''],
+      ['사회·축가·축사 부탁', '두 달 전에, 거절해도 괜찮다는 말 함께', '/script/request-texts/'],
+      ['예식 순서 정하기', '덕담·성혼선언은 부모님께 한 달 전에 부탁', '/wedding-day/ceremony-order/']
+    ]],
+    ['마무리 점검', 1.5, 0.25, [
+      ['청첩장 돌리기 (6~4주 전)', '단체방보다 한 사람씩, 인사 한두 줄 덧붙이기', '/script/invitation-texts/'],
+      ['답례품 주문', '보증인원보다 조금 넉넉히, 제작 기간 확인', '/dapre/wedding-favors/'],
+      ['부케·부토니에·폐백 음식 주문', '폐백은 할 때만', '/yedan/pyebaek/'],
+      ['예식장에 최종 보증인원 알리기', '통보 마감일을 계약서에서 확인', ''],
+      ['당일 타임테이블·잔금 봉투 준비', '업체 이름을 봉투에 써서 나눠 두기', ''],
+      ['축의금 받을 사람·가방 들 사람 정하기', '축의금 관리 방식을 양가와 미리 정하기', '/script/money-talk/']
+    ]],
+    ['당일과 그 뒤', 0, -1, [
+      ['당일 준비물 챙기기', '신분증·잔금 봉투·반지·구두·사례 봉투', ''],
+      ['축의금·방명록 정리', '누가 보냈는지 기록해 두기', ''],
+      ['감사 문자 보내기 (1~2주 안)', '금액은 언급하지 않기', '/script/thank-you-texts/'],
+      ['혼인신고', '성인 증인 2명 서명 필요', '/honsu/after-wedding/'],
+      ['전입신고 (이사한 날부터 14일 안)', '정부24 온라인 가능', '/honsu/after-wedding/']
+    ]]
+  ];
+  var KEY = 'wc-checklist-v1';
+  var state = {};
+  try { state = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { state = {}; }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+  var dateEl = document.getElementById('cl-date');
+  if (state.date) dateEl.value = state.date;
+  function fmt(d) { return d.getFullYear() + '.' + (d.getMonth() + 1) + '.' + d.getDate(); }
+  function before(base, m) { var d = new Date(base); d.setDate(d.getDate() - Math.round(m * 30.4)); return d; }
+  function when(st, base) {
+    var label = st[1] <= 0 ? '결혼식 당일·이후' : st[2] < 1 ? '결혼 6주 전~1주 전' : 'D-' + st[1] + '~' + st[2] + '개월';
+    if (!base) return label;
+    if (st[1] <= 0) return label + '<br><small>' + fmt(base) + '~</small>';
+    return label + '<br><small>' + fmt(before(base, st[1])) + ' ~ ' + fmt(before(base, st[2])) + '</small>';
+  }
+  function render() {
+    var base = dateEl.value ? new Date(dateEl.value + 'T00:00:00') : null;
+    var today = new Date(); today.setHours(0, 0, 0, 0);
+    var total = 0, done = 0, html = '';
+    S.forEach(function (st, si) {
+      var late = base && st[1] > 0 && before(base, st[2]) < today;
+      html += '<tr class="stage"><th colspan="3">' + (si + 1) + '단계 · ' + st[0] + '</th><th class="cl-when">' + when(st, base) + '</th></tr>';
+      st[3].forEach(function (t, ti) {
+        var id = si + '-' + ti, on = !!state[id];
+        total++; if (on) done++;
+        var name = t[2] ? '<a href="' + (window.BASE || '') + t[2] + '">' + t[0] + '</a>' : t[0];
+        html += '<tr class="' + (on ? 'done' : late ? 'late' : '') + '"><td class="cl-box"><input type="checkbox" data-id="' + id + '"' + (on ? ' checked' : '') + ' aria-label="' + t[0] + '"></td><td colspan="2">' + name + (late && !on ? ' <span class="late-tag">늦음</span>' : '') + '</td><td class="cl-note">' + t[1] + '</td></tr>';
+      });
+    });
+    document.getElementById('cl-body').innerHTML = html;
+    document.getElementById('cl-prog').innerHTML = '<b>' + done + '</b> / ' + total + ' 완료' + (base ? ' · 결혼식 ' + fmt(base) + ' (D-' + Math.max(Math.ceil((base - today) / 864e5), 0) + ')' : '');
+    document.getElementById('cl-bar').style.width = (total ? done / total * 100 : 0) + '%';
+  }
+  document.getElementById('cl-body').addEventListener('change', function (e) {
+    var id = e.target.getAttribute('data-id'); if (!id) return;
+    if (e.target.checked) state[id] = 1; else delete state[id];
+    save(); render();
+  });
+  dateEl.addEventListener('change', function () { state.date = dateEl.value; save(); render(); });
+  document.getElementById('cl-print').addEventListener('click', function () { window.print(); });
+  document.getElementById('cl-reset').addEventListener('click', function () {
+    if (!confirm('체크한 내용을 모두 지울까요? (결혼 날짜는 남겨 둡니다)')) return;
+    state = { date: state.date }; save(); render();
+  });
+  render();
+})();

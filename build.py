@@ -199,6 +199,7 @@ def read_sections():
 
 
 def layout(*, title, description, path, body, sections, json_ld=None, page_title=None, noindex=False):
+    body_class = ' class="has-clist"' if 'id="clist"' in body else ""
     canonical = SITE_URL + path
     full_title = page_title or f"{title} | {SITE_NAME}"
     head_extra = []
@@ -250,7 +251,7 @@ def layout(*, title, description, path, body, sections, json_ld=None, page_title
 <link rel="alternate" type="application/rss+xml" title="{esc(SITE_NAME)}" href="{url('/rss.xml')}">
 {chr(10).join(head_extra)}
 </head>
-<body>
+<body{body_class}>
 <header class="site-header">
   <div class="wrap">
     <a class="logo" href="{url('/')}"><img src="{url('/assets/favicon.svg')}" alt="" width="30" height="30">{esc(SITE_NAME)}</a>
