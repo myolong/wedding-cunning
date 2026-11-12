@@ -311,3 +311,10 @@ main h1{font-family:var(--hand);font-weight:400;font-size:clamp(2.1rem,5.5vw,2.8
   #hlist .cl-note{display:table-cell!important}.clist .hl-sub{display:none!important}
   .clist .lv{font-size:10.5px;padding:0 5px}
 }
+/* 예산 계산기: 비율 직접 고치기 */
+.calc .ratio-head{margin:0 0 4px}
+.calc .ratio td.pct{white-space:nowrap;width:1%;text-align:right;font-size:14px;color:var(--muted)}
+.calc .ratio td.pct input{display:inline-block;width:56px;margin:0 3px 0 0;padding:3px 6px;font-size:15px;text-align:right}
+.calc .ratio td.amt{text-align:right;white-space:nowrap;min-width:84px}
+.calc .ratio-sum{font-size:14.5px;margin:6px 0 10px}
+.calc #wb-out{margin-top:14px}

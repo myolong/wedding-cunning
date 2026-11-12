@@ -1,6 +1,6 @@
 ---
 title: 결혼 예산 계산기 - 총예산 넣으면 항목별로 나눠 드림
-description: 결혼 총예산과 하객 수를 넣으면 예식장·스드메·예물·신혼여행·예단 등 8개 항목으로 나누고, 하객 1명당 예식장 예산까지 계산해 줍니다. 예단 생략, 국내 신혼여행 같은 선택도 반영합니다.
+description: 결혼 총예산과 하객 수를 넣으면 예식장·스드메·예물·신혼여행·예단 등 8개 항목으로 나누고, 하객 1명당 예식장 예산까지 계산해 줍니다. 예단 생략, 국내 신혼여행 같은 선택도 반영하고, 항목별 비율을 직접 고칠 수 있습니다.
 short: 결혼 예산 계산기
 calc: yes
 order: 1
@@ -20,11 +20,13 @@ home: yes
     <label><input type="checkbox" id="wb-trip" style="display:inline;width:auto"> 신혼여행은 국내·가까운 곳</label>
     <label><input type="checkbox" id="wb-snap" style="display:inline;width:auto"> 본식 스냅·영상 안 함</label>
   </div>
-  <div class="result" id="wb-out" aria-live="polite"></div>
+  <div class="result" id="wb-ratio"></div>
+  <div id="wb-out" aria-live="polite"></div>
 </form>
 
 <h2>계산 방법</h2>
 <p>총예산을 아래 기본 비율로 나눕니다. 생략하거나 줄이는 항목을 체크하면 그만큼 비율이 줄고, 남는 돈은 나머지 항목에 같은 비율로 다시 나눕니다.</p>
+<p><b>비율은 직접 고칠 수 있습니다.</b> 항목 옆 % 칸을 고치면 금액이 바로 바뀌고, 합계가 100%가 아니면 넘치거나 남는 금액을 알려 줍니다. <b>합계 100%로 맞추기</b>를 누르면 고친 비율을 유지한 채 합계를 100%로 맞춰 주고, <b>기본 비율로 되돌리기</b>를 누르면 처음 값으로 돌아갑니다. 고친 비율은 이 기기의 브라우저에만 저장됩니다.</p>
 <table>
 <thead><tr><th>항목</th><th>기본 비율</th><th>줄일 때</th></tr></thead>
 <tbody>
