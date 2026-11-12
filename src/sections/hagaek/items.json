@@ -1,0 +1,13 @@
+[
+ {"name": "형제자매", "cat": "가족·친척", "attend": "30~100만원", "absent": "참석과 같게", "tip": "집안마다 차이가 커서 부모님·다른 형제와 미리 맞추기", "guide": "chukuigeum-calculator", "aka": ["형제", "자매", "남매", "언니", "오빠", "누나", "동생"]},
+ {"name": "사촌·가까운 친척", "cat": "가족·친척", "attend": "10~30만원", "absent": "10~20만원", "tip": "같은 항렬끼리 금액을 맞추는 경우가 많음", "guide": "chukuigeum-calculator", "aka": ["사촌", "친척", "조카"]},
+ {"name": "먼 친척", "cat": "가족·친척", "attend": "10~20만원", "absent": "5~10만원", "tip": "부모님이 대신 내시는지 먼저 확인", "guide": "chukuigeum-calculator", "aka": ["육촌", "친척"]},
+ {"name": "아주 친한 친구", "cat": "친구", "attend": "20~30만원", "absent": "10~20만원", "tip": "축의금 대신 또는 함께 선물을 하기도 함", "guide": "chukuigeum-calculator", "aka": ["절친", "베프", "단짝"]},
+ {"name": "친한 친구·동창", "cat": "친구", "attend": "10~15만원", "absent": "5~10만원", "tip": "같은 모임 친구들과 금액을 맞추면 편함", "guide": "chukuigeum-calculator", "aka": ["친구", "동창", "동기"]},
+ {"name": "가끔 연락하는 친구", "cat": "친구", "attend": "10만원", "absent": "5만원", "tip": "참석하면 식대를 생각해 10만원이 많음", "guide": "chukuigeum-calculator", "aka": ["지인", "친구"]},
+ {"name": "사적으로 친한 직장 동료", "cat": "직장", "attend": "10~20만원", "absent": "5~10만원", "tip": "조사에서 10만원이 가장 많았음(약 60%)", "guide": "chukuigeum-calculator", "aka": ["동료", "직장동료", "회사동료", "입사동기"]},
+ {"name": "일로 아는 동료", "cat": "직장", "attend": "10만원", "absent": "5만원", "tip": "참석해 식사하면 10만원이 가장 흔함", "guide": "chukuigeum-calculator", "aka": ["동료", "직장동료", "다른팀", "상사", "후배"]},
+ {"name": "거래처", "cat": "직장", "attend": "10만원", "absent": "5만원", "tip": "회사 경조사 규정이 있으면 그 기준을 따르기", "guide": "chukuigeum-calculator", "aka": ["거래처", "협력사"]},
+ {"name": "얼굴만 아는 지인", "cat": "지인", "attend": "10만원", "absent": "3~5만원", "tip": "애매하면 참석보다 송금만 하는 경우도 많음", "guide": "chukuigeum-calculator", "aka": ["지인", "아는사람"]},
+ {"name": "부모님 지인의 자녀", "cat": "지인", "attend": "부모님과 상의", "absent": "부모님과 상의", "tip": "보통 부모님 이름으로 내시니 따로 낼지 먼저 여쭤보기", "guide": "chukuigeum-calculator", "aka": ["부모님지인", "혼주"]}
+]

@@ -44,6 +44,21 @@
   "modified": "2026-11-12",
   "hash": "f9e0f2b541aad52dca0f9fcc67b01ca1"
  },
+ "src/sections/hagaek/guides/chukuigeum-calculator.html": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "bb801daf73a20ccc53ae860e55cf867f"
+ },
+ "src/sections/hagaek/items.json": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "087c9bd05fd9d0d9e83dbc7d43129031"
+ },
+ "src/sections/hagaek/section.json": {
+  "published": "2026-11-12",
+  "modified": "2026-11-12",
+  "hash": "70de8c31a69199f59b0dc34f57d430ff"
+ },
  "src/sections/honsu/guides/after-wedding.html": {
   "published": "2026-11-12",
   "modified": "2026-11-12",

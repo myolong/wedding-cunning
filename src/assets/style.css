@@ -354,3 +354,14 @@ main h1{font-family:var(--hand);font-weight:400;font-size:clamp(2.1rem,5.5vw,2.8
   .wd-season,.wd-legend .sw,.wd-cell .dot,.wd-legend .dot{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .wd-month{break-inside:avoid}
 }
+/* 축의금 계산기 */
+.chuk .ck-opt{margin:12px 0 0}
+.chuk .ck-opt .wd-check{display:inline-flex;align-items:center;gap:6px;font-size:14.5px;color:var(--ink)}
+.chuk .ck-opt input{display:inline;width:auto;margin:0}
+.ck-range{list-style:none;padding:0;margin:12px 0 4px;display:flex;gap:8px;flex-wrap:wrap}
+.ck-range li{flex:1 1 90px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;text-align:center;background:var(--card)}
+.ck-range li small{display:block;font-size:12.5px;color:var(--muted)}
+.ck-range li b{font-size:18px}
+.ck-range li.on{border-color:var(--persim);border-width:2px}
+.ck-why{margin:10px 0 0;padding-left:1.2em;font-size:15px}
+.ck-why li{margin:3px 0}

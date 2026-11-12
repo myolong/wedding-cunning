@@ -1,0 +1,96 @@
+---
+title: 축의금 얼마 낼까 계산기 - 관계·참석 여부·동행자·식대로 적정 금액 계산
+description: 신랑·신부와의 관계, 참석 여부, 함께 가는 사람 수, 예식장 식대, 예전에 받은 축의금을 넣으면 적정 축의금을 계산해 줍니다. 2025년 평균 축의금은 11만 7천원(NH농협은행 송금 분석)입니다.
+short: 축의금 얼마 낼까 계산기
+calc: yes
+order: 0
+home: yes
+sources: 한국소비자원 참가격(예식장 식대) | https://www.price.go.kr ; 서울신문 2026.11.2. NH농협은행 축의금 송금 분석 보도 | https://www.seoul.co.kr/news/newsView.php?id=20261102500008 ; 서울신문 2025.5.26. 인크루트 직장인 축의금 조사 보도 | https://m.seoul.co.kr/news/2025/05/26/20250526500083
+---
+<p>청첩장을 받으면 "얼마 내야 하지?"부터 고민됩니다. 축의금은 <b>얼마나 가까운 사이인지</b>, <b>참석해서 식사를 하는지</b>, <b>몇 명이 함께 가는지</b>, <b>예전에 나는 얼마를 받았는지</b>로 정하는 경우가 많습니다. 아래에 넣으면 흔한 기준에 맞춰 금액을 골라 드립니다.</p>
+
+<div class="calc chuk" id="chuk">
+  <div class="fields">
+    <label>신랑·신부와 나의 관계<select id="ck-rel">
+      <optgroup label="가족·친척">
+        <option value="sib">형제자매</option>
+        <option value="cousin">사촌·가까운 친척</option>
+        <option value="kin">먼 친척</option>
+      </optgroup>
+      <optgroup label="친구">
+        <option value="best">아주 친한 친구</option>
+        <option value="friend" selected>친한 친구·동창</option>
+        <option value="loose">가끔 연락하는 친구</option>
+      </optgroup>
+      <optgroup label="직장">
+        <option value="cowork1">사적으로 친한 직장 동료</option>
+        <option value="cowork2">일로 아는 동료·상사·후배</option>
+        <option value="client">거래처</option>
+      </optgroup>
+      <optgroup label="지인">
+        <option value="acq">얼굴만 아는 지인</option>
+      </optgroup>
+    </select></label>
+    <label>참석하나요?<select id="ck-att">
+      <option value="eat" selected>참석해서 식사까지</option>
+      <option value="noeat">참석하지만 식사는 안 함</option>
+      <option value="no">못 가요(송금·전달만)</option>
+    </select></label>
+    <label id="ck-n-wrap">함께 식사하는 사람(나 포함)<select id="ck-n">
+      <option value="1" selected>나 혼자</option>
+      <option value="2">2명 (배우자·연인 등)</option>
+      <option value="3">3명</option>
+      <option value="4">4명</option>
+      <option value="5">5명</option>
+    </select><span class="hint">돌 전 아기처럼 따로 식사하지 않는 아이는 빼고 세세요.</span></label>
+    <label id="ck-meal-wrap">예식장 1인 식대<select id="ck-meal">
+      <option value="8" selected>모름 · 서울 (중간값 약 8만원)</option>
+      <option value="6">모름 · 서울 밖 (전국 중간값 약 6만원)</option>
+      <option value="5">5만원 안팎</option>
+      <option value="7">7만원 안팎</option>
+      <option value="10">10만원 안팎</option>
+      <option value="13">13만원 안팎 (호텔 등)</option>
+      <option value="16">16만원 넘음</option>
+    </select></label>
+    <label>예전에 이 사람에게 받은 축의금<input id="ck-got" type="number" inputmode="numeric" min="0" step="1" placeholder="없으면 비워 두세요"><span class="hint">만원 단위로 입력 (예: 10)</span></label>
+  </div>
+  <p class="ck-opt"><label class="wd-check"><input type="checkbox" id="ck-tight"> 아직 학생이거나 취업 준비 중이라 부담돼요</label></p>
+  <div class="result" id="ck-out" aria-live="polite"></div>
+</div>
+
+<h2>계산 기준</h2>
+<ul>
+<li><b>관계별 기본 금액</b>: 혼자 참석할 때와 못 갈 때를 나눠 정했습니다. 관계별 금액은 <a href="/hagaek/">관계별 축의금 기준표</a>에서 한눈에 볼 수 있습니다.</li>
+<li><b>함께 가는 사람</b>: 한 명이 늘 때마다 그 사람 식대만큼 더합니다. 식대보다 적게 내면 신랑·신부가 오히려 손해를 보기 때문입니다.</li>
+<li><b>받은 축의금</b>: 예전에 받은 금액보다 적게 내지 않도록 맞춥니다. 몇 년이 지났다면 그사이 오른 식대를 생각해 한 단계 올려 내는 경우도 많습니다.</li>
+<li><b>금액 단위</b>: 3·5·10·15·20·30·50만원처럼 흔히 쓰는 단위로 올려 맞춥니다. 4만원처럼 '4'가 들어간 금액은 피하는 관례가 있습니다.</li>
+</ul>
+
+<h2>요즘 축의금, 숫자로 보면</h2>
+<ul>
+<li><b>평균 11만 7천원</b>: NH농협은행이 축의금 송금을 분석한 결과, 2025년 평균 축의금은 11만 7천원으로 2023년 11만원, 2024년 11만 4천원에서 해마다 올랐습니다. 5만원 송금 비중은 줄고 10만원 비중은 늘었습니다.</li>
+<li><b>직장 동료는 10만원</b>: 인크루트가 직장인 844명에게 물은 조사(2025년 5월 발표)에서 참석해 식사하는 경우 적정 축의금으로 10만원을 꼽은 사람이 61.8%로 가장 많았습니다. 5만원은 32.8%였습니다.</li>
+<li><b>식대 중간값 서울 8만원, 전국 6만원</b>: 한국소비자원 참가격 자료(2026년 8월 기준) 예식장 1인 식대 중간값입니다. 혼자 참석해 5만원을 내면 식대에도 못 미치는 경우가 많아졌습니다.</li>
+</ul>
+
+<h2>내기 전에 알아 두면 좋은 것</h2>
+<ul>
+<li><b>모임끼리 맞추기</b>: 같은 동기·동창 모임이라면 금액을 미리 맞추면 서로 편합니다.</li>
+<li><b>봉투</b>: 앞면에 '축 결혼' 또는 '祝 結婚', 뒷면 왼쪽 아래에 이름을 적습니다. 회사 동료끼리는 이름 옆에 부서를 적어 두면 신랑·신부가 정리하기 쉽습니다.</li>
+<li><b>송금할 때</b>: 받는 사람 통장에 내 이름이 보이도록 하고, 메모 칸에 "결혼 축하해"처럼 짧은 인사를 남기면 좋습니다.</li>
+<li><b>새 지폐</b>: 꼭 새 돈일 필요는 없지만, 너무 구겨진 지폐는 피하는 편이 좋습니다.</li>
+</ul>
+<p>내가 결혼하는 쪽이라면 받은 축의금 정리와 감사 인사는 <a href="/script/thank-you-texts/">감사 인사 문자</a>를 참고하세요.</p>
+<p class="note">이 계산기는 흔한 관례를 정리한 참고용입니다. 축의금에 정답은 없고, 내 형편에 맞게 내는 것이 가장 중요합니다. 입력한 내용은 이 기기 밖으로 보내지 않습니다.</p>
+
+<h2>자주 묻는 질문</h2>
+<h3>축의금 5만원 내고 밥 먹어도 되나요?</h3>
+<p>안 되는 건 아니지만, 예식장 1인 식대 중간값이 서울 8만원, 전국 6만원이라 5만원이면 식대보다 적은 경우가 많습니다. 그래서 요즘은 참석해서 식사하면 10만원, 못 가면 5만원을 많이 냅니다.</p>
+<h3>부부나 커플이 둘이 가면 축의금은 얼마인가요?</h3>
+<p>혼자 갈 때 금액에 한 사람 식대만큼 더하는 것이 보통입니다. 혼자 10만원을 낼 사이라면 둘이 갈 때는 15~20만원이 많고, 식대가 비싼 호텔 예식이라면 20만원 이상을 생각해 보세요.</p>
+<h3>결혼식에 못 가면 축의금은 얼마 내나요?</h3>
+<p>식사를 하지 않으니 참석할 때보다 조금 적게 내는 경우가 많습니다. 친한 친구라면 5~10만원, 일로 아는 동료나 지인이라면 5만원이 흔합니다. 가족이나 아주 가까운 사이라면 참석 여부와 상관없이 같게 내기도 합니다.</p>
+<h3>예전에 받은 만큼 돌려줘야 하나요?</h3>
+<p>받은 금액보다 적게 내면 서운해할 수 있어 받은 만큼은 내는 것이 일반적입니다. 받은 지 몇 년이 지났다면 그사이 식대와 물가가 올랐으니 한 단계 올려 내기도 합니다.</p>
+<h3>축의금으로 4만원은 왜 안 내나요?</h3>
+<p>숫자 4가 '죽을 사(死)'와 소리가 같다고 여겨 경사에는 피하는 관례가 있습니다. 그래서 3만원, 5만원처럼 홀수로 내거나 10만원 단위로 맞추는 경우가 많습니다.</p>
