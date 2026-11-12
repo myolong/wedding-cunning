@@ -32,18 +32,75 @@
       ['한복·혼주 의상·상견례', 3, null, 0, '/wedding-day/honju-hanbok/'],
       ['청첩장·답례품·기타', 4, null, 0, '/dapre/wedding-favors/']
     ];
-    function run() {
-      var total = num('wb-total'), guests = num('wb-guests'), gift = num('wb-gift');
-      var out = $('wb-out');
-      if (!total) { out.innerHTML = '<p class="note">총예산을 넣으면 바로 나눠 드립니다.</p>'; return; }
+    var KEY = 'wc-budget-ratio-v1', custom = null;
+    var saved = null;
+    try { saved = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) { saved = null; }
+    if (saved && saved.p && saved.p.length === ITEMS.length) {
+      custom = saved.p;
+      ITEMS.forEach(function (it) { if (it[2] && $(it[2])) $(it[2]).checked = !!(saved.c && saved.c[it[2]]); });
+    }
+    function saveCustom() {
+      try {
+        if (!custom) { localStorage.removeItem(KEY); return; }
+        var c = {}; ITEMS.forEach(function (it) { if (it[2] && $(it[2])) c[it[2]] = $(it[2]).checked; });
+        localStorage.setItem(KEY, JSON.stringify({ p: custom, c: c }));
+      } catch (e) {}
+    }
+    // 체크 상태로 기본 비율 계산 → 정수 %로 합계 100 맞추기
+    function defaults() {
       var w = ITEMS.map(function (it) { return it[2] && $(it[2]) && $(it[2]).checked ? it[3] : it[1]; });
       var sum = w.reduce(function (a, b) { return a + b; }, 0);
-      var amt = w.map(function (x) { return total * x / sum; });
+      var raw = w.map(function (x) { return x / sum * 100; }), p = raw.map(Math.floor);
+      var left = 100 - p.reduce(function (a, b) { return a + b; }, 0);
+      raw.map(function (x, i) { return [x - Math.floor(x), i]; }).sort(function (a, b) { return b[0] - a[0]; })
+        .slice(0, left).forEach(function (r) { p[r[1]]++; });
+      return p;
+    }
+    // 비율 표 (한 번만 그리고, 입력 중에는 금액 칸만 바꿈)
+    var box = $('wb-ratio');
+    box.innerHTML = '<p class="ratio-head"><b>항목별 비율</b> <span class="hint" style="display:inline">%를 직접 고쳐도 됩니다</span></p>' +
+      '<table class="rows ratio"><tbody>' + ITEMS.map(function (it, i) {
+        return '<tr><td><a href="' + (window.BASE || '') + it[4] + '">' + it[0] + '</a></td><td class="pct"><input type="text" inputmode="decimal" data-pct="' + i + '" aria-label="' + it[0] + ' 비율(%)">%</td><td class="amt" id="wb-amt' + i + '"></td></tr>';
+      }).join('') + '</tbody></table>' +
+      '<p class="ratio-sum" id="wb-sum"></p>' +
+      '<div class="seg"><button type="button" id="wb-fit">합계 100%로 맞추기</button><button type="button" id="wb-reset">기본 비율로 되돌리기</button></div>';
+    var pins = box.querySelectorAll('input[data-pct]');
+    function fill(p) { Array.prototype.forEach.call(pins, function (el, i) { el.value = String(Math.round(p[i] * 10) / 10); }); }
+    function pcts() { return Array.prototype.map.call(pins, function (el) { var v = parseFloat(el.value); return isFinite(v) && v > 0 ? v : 0; }); }
+    fill(custom || defaults());
+    box.addEventListener('input', function (e) {
+      if (!e.target.hasAttribute('data-pct')) return;
+      var v = e.target.value.replace(/[^0-9.]/g, ''); if (v !== e.target.value) e.target.value = v;
+      custom = pcts(); saveCustom();
+    });
+    ITEMS.forEach(function (it, i) {
+      if (!it[2] || !$(it[2])) return;
+      $(it[2]).addEventListener('change', function () {
+        if (!custom) { fill(defaults()); return; }
+        pins[i].value = String(this.checked ? it[3] : it[1]); custom = pcts(); saveCustom();
+      });
+    });
+    $('wb-fit').addEventListener('click', function () {
+      var p = pcts(), s = p.reduce(function (a, b) { return a + b; }, 0); if (!s) return;
+      var q = p.map(function (x) { return Math.round(x / s * 1000) / 10; });
+      var d = Math.round((100 - q.reduce(function (a, b) { return a + b; }, 0)) * 10) / 10;
+      var big = q.indexOf(Math.max.apply(null, q)); q[big] = Math.round((q[big] + d) * 10) / 10;
+      fill(q); custom = pcts(); saveCustom(); run();
+    });
+    $('wb-reset').addEventListener('click', function () { custom = null; saveCustom(); fill(defaults()); run(); });
+    function run() {
+      var total = num('wb-total'), guests = num('wb-guests'), gift = num('wb-gift');
+      var out = $('wb-out'), p = pcts();
+      var psum = Math.round(p.reduce(function (a, b) { return a + b; }, 0) * 10) / 10;
+      var amt = p.map(function (x) { return total * x / 100; });
+      amt.forEach(function (a, i) { $('wb-amt' + i).textContent = !total ? '' : p[i] ? man(a) : '생략'; });
+      var used = amt.reduce(function (a, b) { return a + b; }, 0);
+      $('wb-sum').innerHTML = '합계 <b>' + psum + '%</b>' + (total ? ' · ' + man(used) : '') +
+        (psum > 100 ? ' <span class="warn" style="display:inline">· 총예산보다 ' + man(used - total) + ' 넘칩니다</span>'
+          : psum < 100 ? ' <span class="warn" style="display:inline">· 아직 ' + man(total - used) + ' (' + Math.round((100 - psum) * 10) / 10 + '%) 남았습니다</span>' : '');
+      if (!total) { out.innerHTML = '<p class="note">총예산을 넣으면 바로 나눠 드립니다.</p>'; return; }
       var html = '<p class="big">' + man(total) + '<small>총예산 (신혼집 제외)</small></p>';
-      html += '<table class="rows"><tbody>' + ITEMS.map(function (it, i) {
-        return '<tr><td><a href="' + (window.BASE || '') + it[4] + '">' + it[0] + '</a> <small>(' + Math.round(w[i] / sum * 100) + '%)</small></td><td>' + (w[i] ? man(amt[i]) : '생략') + '</td></tr>';
-      }).join('') + '</tbody></table>';
-      if (guests > 0) {
+      if (guests > 0 && amt[0] > 0) {
         var per = amt[0] * 10000 / guests;
         html += '<p class="note" style="margin-top:12px"><b>하객 1명당 예식장 예산: 약 ' + won(per) + '</b><br>대관료가 따로 붙는 곳이면 식대로 쓸 수 있는 돈은 이보다 적습니다. 예식장 견적의 1인 식대 × 보증인원이 이 금액 안에 들어오는지 먼저 비교해 보세요.</p>';
       }
@@ -53,7 +110,7 @@
           '<tr><td>축의금을 뺀 실제 부담</td><td>' + man(Math.max(total - inflow, 0)) + '</td></tr></tbody></table>' +
           '<p class="note">축의금은 양가가 각자 관리하는 집도 많아서, 두 사람 예산에 넣을지는 먼저 양가와 이야기해 두세요.</p>';
       }
-      html += '<p class="note">비율은 항목을 고루 나눈 예시입니다. 지역·업체·하객 수에 따라 크게 달라지니, 우리에게 중요한 항목에 더 주고 덜 중요한 항목을 줄여 조정하세요.</p>';
+      html += '<p class="note">기본 비율은 항목을 고루 나눈 예시입니다. 우리에게 중요한 항목의 %를 올리고 덜 중요한 항목을 줄여 보세요. 고친 비율은 이 기기에만 저장됩니다.</p>';
       out.innerHTML = html;
     }
     bind(f, run);
