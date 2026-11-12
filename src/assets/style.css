@@ -354,14 +354,3 @@ main h1{font-family:var(--hand);font-weight:400;font-size:clamp(2.1rem,5.5vw,2.8
   .wd-season,.wd-legend .sw,.wd-cell .dot,.wd-legend .dot{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .wd-month{break-inside:avoid}
 }
-/* 축사·사회 대본 만들기 */
-.speech .sp-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
-.btn-plain.ghost{background:var(--card);color:var(--ink)}
-.speech .sp-text p{margin:.55em 0;line-height:1.75}
-@media print{
-  body.has-sp .site-header,body.has-sp .site-footer,body.has-sp .related,body.has-sp .crumbs,body.has-sp .meta,body.has-sp .article > :not(.speech),body.has-sp .speech > :not(#sp-out){display:none!important}
-  body.has-sp{background:#fff!important}
-  body.has-sp .speech{border:0;box-shadow:none;padding:0}
-  body.has-sp .sp-text{border:0;box-shadow:none;font-size:14pt}
-  @page{size:A4;margin:15mm}
-}
